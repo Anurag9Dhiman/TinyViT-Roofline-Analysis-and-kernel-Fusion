@@ -8,6 +8,10 @@ Hardware: Apple M4 (10-core GPU), 16GB unified memory. Software: PyTorch
 2.8.0 (MPS backend) for the standard baseline, MLX for the fused-attention
 implementation.
 
+**[Final Report (PDF)](System_Engineering_Final_Report.pdf)** -- condensed
+writeup (problem, prior work, implementation, evaluation vs. baseline).
+See `report.md` below for the full, unabridged technical writeup.
+
 ## Setup
 
 Requires an Apple Silicon Mac (MPS + Metal support) and Python 3.10+.
