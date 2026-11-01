@@ -7,7 +7,8 @@ RESULTS_DIR = REPO_ROOT / "results"
 RAW_DIR = RESULTS_DIR / "raw"
 TRACE_DIR = RESULTS_DIR / "traces"
 PLOTS_DIR = RESULTS_DIR / "plots"
-for _d in (RAW_DIR, TRACE_DIR, PLOTS_DIR):
+CACHE_DIR = REPO_ROOT / ".cache"
+for _d in (RAW_DIR, TRACE_DIR, PLOTS_DIR, CACHE_DIR):
     _d.mkdir(parents=True, exist_ok=True)
 
 DEVICE = "mps"

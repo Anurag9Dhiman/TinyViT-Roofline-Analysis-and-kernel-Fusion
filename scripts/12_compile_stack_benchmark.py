@@ -34,9 +34,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from tinyvit_roofline.config import MODEL_REGISTRY, RAW_DIR
+from tinyvit_roofline.config import CACHE_DIR, MODEL_REGISTRY, RAW_DIR
 
-SCRATCH_DIR = Path("/private/tmp/claude-501/-Users-anuragdhiman-Documents-tinyViT/ac31620d-7359-4957-aff3-df1814dc89cd/scratchpad")
+SCRATCH_DIR = CACHE_DIR
 RUN_RESULT_PATH = SCRATCH_DIR / "phase12_run_result.json"
 
 ARMS = ("baseline", "best", "best_compiled")

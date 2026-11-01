@@ -46,9 +46,9 @@ from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from tinyvit_roofline.config import RAW_DIR, MODEL_REGISTRY, IMAGENET_HF_ID, IMAGES_PER_CLASS, NUM_CLASSES
+from tinyvit_roofline.config import CACHE_DIR, RAW_DIR, MODEL_REGISTRY, IMAGENET_HF_ID, IMAGES_PER_CLASS, NUM_CLASSES
 
-SCRATCH_DIR = Path("/private/tmp/claude-501/-Users-anuragdhiman-Documents-tinyViT/ac31620d-7359-4957-aff3-df1814dc89cd/scratchpad")
+SCRATCH_DIR = CACHE_DIR
 SUBSET_CACHE = SCRATCH_DIR / "imagenet_subset_cache.pkl"
 ARM_RESULT_PATH = SCRATCH_DIR / "phase7_arm_result.json"
 

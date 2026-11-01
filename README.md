@@ -8,6 +8,20 @@ Hardware: Apple M4 (10-core GPU), 16GB unified memory. Software: PyTorch
 2.8.0 (MPS backend) for the standard baseline, MLX for the fused-attention
 implementation.
 
+## Setup
+
+Requires an Apple Silicon Mac (MPS + Metal support) and Python 3.10+.
+
+```
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+The custom Metal kernels (`src/tinyvit_roofline/fusion/native/*.mm`) are
+JIT-compiled on first use via `torch.utils.cpp_extension.load()` -- this
+needs Xcode Command Line Tools installed (`xcode-select --install`) but no
+separate build step.
+
 **Headline results** (see `report.md` for the full writeup):
 
 - **Window-attention fusion (the original hypothesis) didn't pay off.** Across
