@@ -1,0 +1,173 @@
+{
+  "phase": "17_mlx_quantized_linear_microbench",
+  "variant": "tiny_vit_11m_224",
+  "methodology_note": "PyTorch's native quantization ops (aten::quantize_per_tensor) are not implemented for the MPS backend (confirmed directly) -- so int8 was never a PyTorch-MPS option here. MLX's mx.quantize/mx.quantized_matmul run on the same GPU. Tests whether that gives MLX a real edge on the linear_qkv_proj_or_mlp category Phase 13 found to be the post-conv-fusion bottleneck, against pytorch_fp16 (Phase 14's existing lever for the same bottleneck).",
+  "group_size": 32,
+  "bits": 8,
+  "warmup": 20,
+  "iters": 300,
+  "blocks": [
+    {
+      "stage_idx": 1,
+      "dim": 128,
+      "qkv_proj": {
+        "input_shape": [
+          16,
+          49,
+          128
+        ],
+        "out_features": 384,
+        "in_features": 128,
+        "pytorch_fp32_us": 101.36305335133025,
+        "pytorch_fp16_us": 85.80916667900358,
+        "mlx_fp32_us": 331.26374997664243,
+        "mlx_int8_us": 328.04166665300727,
+        "speedup_vs_fp32": {
+          "pytorch_fp16": 1.1812613648901977,
+          "mlx_fp32": 0.30598896908725276,
+          "mlx_int8": 0.3089944469113708
+        },
+        "max_abs_diff_vs_pytorch_fp32": {
+          "pytorch_fp16": 0.002846240997314453,
+          "mlx_fp32": 0.0,
+          "mlx_int8": 0.020159423351287842
+        }
+      },
+      "mlp_fc1": {
+        "input_shape": [
+          1,
+          784,
+          128
+        ],
+        "out_features": 512,
+        "in_features": 128,
+        "pytorch_fp32_us": 84.96430663702388,
+        "pytorch_fp16_us": 76.11680339323357,
+        "mlx_fp32_us": 405.37819334228215,
+        "mlx_int8_us": 558.4348600435382,
+        "speedup_vs_fp32": {
+          "pytorch_fp16": 1.1162358749891592,
+          "mlx_fp32": 0.20959269154688853,
+          "mlx_int8": 0.1521472112797537
+        },
+        "max_abs_diff_vs_pytorch_fp32": {
+          "pytorch_fp16": 0.0026102066040039062,
+          "mlx_fp32": 0.0,
+          "mlx_int8": 0.023796141147613525
+        }
+      }
+    },
+    {
+      "stage_idx": 2,
+      "dim": 256,
+      "qkv_proj": {
+        "input_shape": [
+          1,
+          196,
+          256
+        ],
+        "out_features": 768,
+        "in_features": 256,
+        "pytorch_fp32_us": 90.79694330769902,
+        "pytorch_fp16_us": 81.01402665488422,
+        "mlx_fp32_us": 289.0693066486468,
+        "mlx_int8_us": 336.2634700412552,
+        "speedup_vs_fp32": {
+          "pytorch_fp16": 1.1207558376833873,
+          "mlx_fp32": 0.3141009481786989,
+          "mlx_int8": 0.27001726740213383
+        },
+        "max_abs_diff_vs_pytorch_fp32": {
+          "pytorch_fp16": 0.0027284622192382812,
+          "mlx_fp32": 0.0,
+          "mlx_int8": 0.01202613115310669
+        }
+      },
+      "mlp_fc1": {
+        "input_shape": [
+          1,
+          196,
+          256
+        ],
+        "out_features": 1024,
+        "in_features": 256,
+        "pytorch_fp32_us": 97.2208334133029,
+        "pytorch_fp16_us": 88.28125001552205,
+        "mlx_fp32_us": 312.99819665340084,
+        "mlx_int8_us": 366.3523633925555,
+        "speedup_vs_fp32": {
+          "pytorch_fp16": 1.1012625375853768,
+          "mlx_fp32": 0.31061148100147223,
+          "mlx_int8": 0.2653752046608975
+        },
+        "max_abs_diff_vs_pytorch_fp32": {
+          "pytorch_fp16": 0.002681732177734375,
+          "mlx_fp32": 0.0,
+          "mlx_int8": 0.02269887924194336
+        }
+      }
+    },
+    {
+      "stage_idx": 3,
+      "dim": 448,
+      "qkv_proj": {
+        "input_shape": [
+          1,
+          49,
+          448
+        ],
+        "out_features": 1344,
+        "in_features": 448,
+        "pytorch_fp32_us": 80.2893066429533,
+        "pytorch_fp16_us": 76.59138665379336,
+        "mlx_fp32_us": 290.42486334219575,
+        "mlx_int8_us": 361.6591666165429,
+        "speedup_vs_fp32": {
+          "pytorch_fp16": 1.0482811468850302,
+          "mlx_fp32": 0.2764546592842903,
+          "mlx_int8": 0.22200268665685946
+        },
+        "max_abs_diff_vs_pytorch_fp32": {
+          "pytorch_fp16": 0.004306793212890625,
+          "mlx_fp32": 0.0,
+          "mlx_int8": 0.01789569854736328
+        }
+      },
+      "mlp_fc1": {
+        "input_shape": [
+          1,
+          49,
+          448
+        ],
+        "out_features": 1792,
+        "in_features": 448,
+        "pytorch_fp32_us": 84.19930663270254,
+        "pytorch_fp16_us": 75.79583335124578,
+        "mlx_fp32_us": 312.84374999813735,
+        "mlx_int8_us": 413.17458332438645,
+        "speedup_vs_fp32": {
+          "pytorch_fp16": 1.1108698580107195,
+          "mlx_fp32": 0.2691417253283911,
+          "mlx_int8": 0.20378626864033658
+        },
+        "max_abs_diff_vs_pytorch_fp32": {
+          "pytorch_fp16": 0.01129150390625,
+          "mlx_fp32": 0.0,
+          "mlx_int8": 0.0473785400390625
+        }
+      }
+    }
+  ],
+  "mean_speedup_vs_pytorch_fp32": {
+    "qkv_proj": {
+      "pytorch_fp16": 1.116766116486205,
+      "mlx_fp32": 0.298848192183414,
+      "mlx_int8": 0.2670048003234547
+    },
+    "mlp_fc1": {
+      "pytorch_fp16": 1.1094560901950852,
+      "mlx_fp32": 0.2631152992922506,
+      "mlx_int8": 0.20710289486032926
+    }
+  }
+}

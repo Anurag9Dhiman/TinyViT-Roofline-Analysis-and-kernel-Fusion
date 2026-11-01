@@ -1,0 +1,62 @@
+{
+  "phase": "20_ridge_point_batch_sweep",
+  "variant": "tiny_vit_5m_224",
+  "methodology_note": "Each batch size runs in its own subprocess. total_flops is exact (torch.utils.flop_counter.FlopCounterMode at batch=1, scaled linearly -- this architecture has no batch-dependent control flow, so that scaling is exact, not an approximation). Model under test is the optimized combination (conv+BN fusion + channels_last).",
+  "p_max_fp32_gflops_per_s": 2575.8268832522654,
+  "results": [
+    {
+      "batch_size": 1,
+      "latency_ms": 3.430813900195062,
+      "total_flops_bs1": 2317347456,
+      "total_flops": 2317347456,
+      "achieved_gflops_per_s": 675.4512262726477,
+      "images_per_s": 291.4760255410951,
+      "utilization_of_p_max_fp32": 0.262226949592131
+    },
+    {
+      "batch_size": 4,
+      "latency_ms": 12.211680534528568,
+      "total_flops_bs1": 2317347456,
+      "total_flops": 9269389824,
+      "achieved_gflops_per_s": 759.0593119260506,
+      "images_per_s": 327.55524423440215,
+      "utilization_of_p_max_fp32": 0.29468568592919353
+    },
+    {
+      "batch_size": 16,
+      "latency_ms": 46.019434732928254,
+      "total_flops_bs1": 2317347456,
+      "total_flops": 37077559296,
+      "achieved_gflops_per_s": 805.6934969144661,
+      "images_per_s": 347.67919451543224,
+      "utilization_of_p_max_fp32": 0.3127902353038529
+    },
+    {
+      "batch_size": 32,
+      "latency_ms": 91.33864583369964,
+      "total_flops_bs1": 2317347456,
+      "total_flops": 74155118592,
+      "achieved_gflops_per_s": 811.8701335578622,
+      "images_per_s": 350.3445853386356,
+      "utilization_of_p_max_fp32": 0.31518815912534726
+    },
+    {
+      "batch_size": 64,
+      "latency_ms": 180.67125140029628,
+      "total_flops_bs1": 2317347456,
+      "total_flops": 148310237184,
+      "achieved_gflops_per_s": 820.8845404817781,
+      "images_per_s": 354.2345531121674,
+      "utilization_of_p_max_fp32": 0.3186877758824075
+    },
+    {
+      "batch_size": 128,
+      "latency_ms": 359.24532779996906,
+      "total_flops_bs1": 2317347456,
+      "total_flops": 296620474368,
+      "achieved_gflops_per_s": 825.6766377019129,
+      "images_per_s": 356.3024765941327,
+      "utilization_of_p_max_fp32": 0.3205481870968771
+    }
+  ]
+}

@@ -1,0 +1,415 @@
+{
+  "phase": "19_mlx_quantized_linear_batch_sweep",
+  "variant": "tiny_vit_5m_224",
+  "methodology_note": "Follow-up to Phase 17: tests whether MLX's int8 quantized matmul disadvantage vs. its own fp32 matmul shrinks at larger batch sizes, where dequantization overhead should matter less relative to the matmul's total work.",
+  "batch_sizes": [
+    1,
+    4,
+    16,
+    32
+  ],
+  "group_size": 32,
+  "bits": 8,
+  "warmup": 20,
+  "iters": 300,
+  "blocks": [
+    {
+      "stage_idx": 1,
+      "dim": 128,
+      "qkv_proj_by_batch": [
+        {
+          "model_batch_size": 1,
+          "effective_rows": 16,
+          "pytorch_fp32_us": 134.98110987711698,
+          "pytorch_fp16_us": 69.43069650636366,
+          "mlx_fp32_us": 301.920833492962,
+          "mlx_int8_us": 306.97041656821966,
+          "speedup_vs_fp32": {
+            "pytorch_fp16": 1.9441128588526448,
+            "mlx_fp32": 0.4470745139230794,
+            "mlx_int8": 0.43972025508562135
+          },
+          "mlx_int8_vs_mlx_fp32_speedup": 0.9835502615147429,
+          "max_abs_diff_vs_pytorch_fp32": 0.019701331853866577
+        },
+        {
+          "model_batch_size": 4,
+          "effective_rows": 64,
+          "pytorch_fp32_us": 245.995416577595,
+          "pytorch_fp16_us": 192.2362499559919,
+          "mlx_fp32_us": 504.66249987948686,
+          "mlx_int8_us": 526.3051365424568,
+          "speedup_vs_fp32": {
+            "pytorch_fp16": 1.2796515570497762,
+            "mlx_fp32": 0.48744540487224347,
+            "mlx_int8": 0.4674007519547563
+          },
+          "mlx_int8_vs_mlx_fp32_speedup": 0.9588781580108633,
+          "max_abs_diff_vs_pytorch_fp32": 0.02003488875925541
+        },
+        {
+          "model_batch_size": 16,
+          "effective_rows": 256,
+          "pytorch_fp32_us": 668.9358333824202,
+          "pytorch_fp16_us": 557.8591666805247,
+          "mlx_fp32_us": 1284.9831965286285,
+          "mlx_int8_us": 1316.449583391659,
+          "speedup_vs_fp32": {
+            "pytorch_fp16": 1.1991123805724018,
+            "mlx_fp32": 0.520579440407894,
+            "mlx_int8": 0.5081363098304116
+          },
+          "mlx_int8_vs_mlx_fp32_speedup": 0.9760975374522421,
+          "max_abs_diff_vs_pytorch_fp32": 0.02226075530052185
+        },
+        {
+          "model_batch_size": 32,
+          "effective_rows": 512,
+          "pytorch_fp32_us": 1250.1654166650649,
+          "pytorch_fp16_us": 1097.7831933026512,
+          "mlx_fp32_us": 2278.2458333919444,
+          "mlx_int8_us": 2279.0906933369115,
+          "speedup_vs_fp32": {
+            "pytorch_fp16": 1.1388090328692095,
+            "mlx_fp32": 0.5487403502912449,
+            "mlx_int8": 0.5485369319966138
+          },
+          "mlx_int8_vs_mlx_fp32_speedup": 0.9996292995502825,
+          "max_abs_diff_vs_pytorch_fp32": 0.022482722997665405
+        }
+      ]
+    },
+    {
+      "stage_idx": 2,
+      "dim": 160,
+      "qkv_proj_by_batch": [
+        {
+          "model_batch_size": 1,
+          "effective_rows": 1,
+          "pytorch_fp32_us": 52.705833416742585,
+          "pytorch_fp16_us": 51.54222327594956,
+          "mlx_fp32_us": 261.77152680854005,
+          "mlx_int8_us": 256.3330566044897,
+          "speedup_vs_fp32": {
+            "pytorch_fp16": 1.0225758624063077,
+            "mlx_fp32": 0.20134288117321364,
+            "mlx_int8": 0.20561465663035924
+          },
+          "mlx_int8_vs_mlx_fp32_speedup": 1.0212164216199462,
+          "max_abs_diff_vs_pytorch_fp32": 0.013938426971435547
+        },
+        {
+          "model_batch_size": 4,
+          "effective_rows": 4,
+          "pytorch_fp32_us": 103.81375012608866,
+          "pytorch_fp16_us": 95.01638996880502,
+          "mlx_fp32_us": 312.0504168327898,
+          "mlx_int8_us": 330.4948632527764,
+          "speedup_vs_fp32": {
+            "pytorch_fp16": 1.0925878173246946,
+            "mlx_fp32": 0.33268261962206125,
+            "mlx_int8": 0.31411607764289984
+          },
+          "mlx_int8_vs_mlx_fp32_speedup": 0.9441914278532084,
+          "max_abs_diff_vs_pytorch_fp32": 0.014329910278320312
+        },
+        {
+          "model_batch_size": 16,
+          "effective_rows": 16,
+          "pytorch_fp32_us": 276.66138989540434,
+          "pytorch_fp16_us": 241.74403011177978,
+          "mlx_fp32_us": 672.9780566335345,
+          "mlx_int8_us": 641.9704165697719,
+          "speedup_vs_fp32": {
+            "pytorch_fp16": 1.1444393880894563,
+            "mlx_fp32": 0.41110016466117616,
+            "mlx_int8": 0.43095660291276944
+          },
+          "mlx_int8_vs_mlx_fp32_speedup": 1.0483007304751597,
+          "max_abs_diff_vs_pytorch_fp32": 0.015543222427368164
+        },
+        {
+          "model_batch_size": 32,
+          "effective_rows": 32,
+          "pytorch_fp32_us": 514.3931932980195,
+          "pytorch_fp16_us": 433.4413898565496,
+          "mlx_fp32_us": 1008.3319466017808,
+          "mlx_int8_us": 1052.0269432648395,
+          "speedup_vs_fp32": {
+            "pytorch_fp16": 1.1867652820794556,
+            "mlx_fp32": 0.5101427114667905,
+            "mlx_int8": 0.48895439094141624
+          },
+          "mlx_int8_vs_mlx_fp32_speedup": 0.9584658958187359,
+          "max_abs_diff_vs_pytorch_fp32": 0.014728546142578125
+        }
+      ]
+    },
+    {
+      "stage_idx": 3,
+      "dim": 320,
+      "qkv_proj_by_batch": [
+        {
+          "model_batch_size": 1,
+          "effective_rows": 1,
+          "pytorch_fp32_us": 54.13360990739117,
+          "pytorch_fp16_us": 52.2595834142218,
+          "mlx_fp32_us": 243.6458334947626,
+          "mlx_int8_us": 308.63347327491886,
+          "speedup_vs_fp32": {
+            "pytorch_fp16": 1.0358599585135495,
+            "mlx_fp32": 0.22218155398317052,
+            "mlx_int8": 0.17539772770911025
+          },
+          "mlx_int8_vs_mlx_fp32_speedup": 0.7894342467439759,
+          "max_abs_diff_vs_pytorch_fp32": 0.017053842544555664
+        },
+        {
+          "model_batch_size": 4,
+          "effective_rows": 4,
+          "pytorch_fp32_us": 140.52555333667746,
+          "pytorch_fp16_us": 118.29958316714813,
+          "mlx_fp32_us": 398.6922199449813,
+          "mlx_int8_us": 585.6973598323142,
+          "speedup_vs_fp32": {
+            "pytorch_fp16": 1.1878786854060657,
+            "mlx_fp32": 0.35246625418491917,
+            "mlx_int8": 0.23992860984879646
+          },
+          "mlx_int8_vs_mlx_fp32_speedup": 0.6807137052130938,
+          "max_abs_diff_vs_pytorch_fp32": 0.01775503158569336
+        },
+        {
+          "model_batch_size": 16,
+          "effective_rows": 16,
+          "pytorch_fp32_us": 300.00277988923096,
+          "pytorch_fp16_us": 239.41000011594346,
+          "mlx_fp32_us": 547.8994466830045,
+          "mlx_int8_us": 616.8637500377372,
+          "speedup_vs_fp32": {
+            "pytorch_fp16": 1.253092100346448,
+            "mlx_fp32": 0.5475507991574996,
+            "mlx_int8": 0.4863355641677405
+          },
+          "mlx_int8_vs_mlx_fp32_speedup": 0.8882017246912083,
+          "max_abs_diff_vs_pytorch_fp32": 0.01813662052154541
+        },
+        {
+          "model_batch_size": 32,
+          "effective_rows": 32,
+          "pytorch_fp32_us": 479.5347233690942,
+          "pytorch_fp16_us": 420.4118032551681,
+          "mlx_fp32_us": 885.9084732830524,
+          "mlx_int8_us": 926.7011100503927,
+          "speedup_vs_fp32": {
+            "pytorch_fp16": 1.1406309710054492,
+            "mlx_fp32": 0.541291496617033,
+            "mlx_int8": 0.5174642807355846
+          },
+          "mlx_int8_vs_mlx_fp32_speedup": 0.9559808051108064,
+          "max_abs_diff_vs_pytorch_fp32": 0.018123626708984375
+        }
+      ]
+    }
+  ],
+  "mean_by_batch_size": {
+    "1": {
+      "mlx_int8_vs_mlx_fp32_speedup": 0.9314003099595549,
+      "pytorch_fp16_speedup": 1.3341828932575008
+    },
+    "4": {
+      "mlx_int8_vs_mlx_fp32_speedup": 0.8612610970257218,
+      "pytorch_fp16_speedup": 1.1867060199268453
+    },
+    "16": {
+      "mlx_int8_vs_mlx_fp32_speedup": 0.9708666642062034,
+      "pytorch_fp16_speedup": 1.1988812896694354
+    },
+    "32": {
+      "mlx_int8_vs_mlx_fp32_speedup": 0.9713586668266082,
+      "pytorch_fp16_speedup": 1.1554017619847048
+    }
+  },
+  "all_rows_by_effective_size": [
+    {
+      "model_batch_size": 1,
+      "effective_rows": 1,
+      "pytorch_fp32_us": 52.705833416742585,
+      "pytorch_fp16_us": 51.54222327594956,
+      "mlx_fp32_us": 261.77152680854005,
+      "mlx_int8_us": 256.3330566044897,
+      "speedup_vs_fp32": {
+        "pytorch_fp16": 1.0225758624063077,
+        "mlx_fp32": 0.20134288117321364,
+        "mlx_int8": 0.20561465663035924
+      },
+      "mlx_int8_vs_mlx_fp32_speedup": 1.0212164216199462,
+      "max_abs_diff_vs_pytorch_fp32": 0.013938426971435547
+    },
+    {
+      "model_batch_size": 1,
+      "effective_rows": 1,
+      "pytorch_fp32_us": 54.13360990739117,
+      "pytorch_fp16_us": 52.2595834142218,
+      "mlx_fp32_us": 243.6458334947626,
+      "mlx_int8_us": 308.63347327491886,
+      "speedup_vs_fp32": {
+        "pytorch_fp16": 1.0358599585135495,
+        "mlx_fp32": 0.22218155398317052,
+        "mlx_int8": 0.17539772770911025
+      },
+      "mlx_int8_vs_mlx_fp32_speedup": 0.7894342467439759,
+      "max_abs_diff_vs_pytorch_fp32": 0.017053842544555664
+    },
+    {
+      "model_batch_size": 4,
+      "effective_rows": 4,
+      "pytorch_fp32_us": 103.81375012608866,
+      "pytorch_fp16_us": 95.01638996880502,
+      "mlx_fp32_us": 312.0504168327898,
+      "mlx_int8_us": 330.4948632527764,
+      "speedup_vs_fp32": {
+        "pytorch_fp16": 1.0925878173246946,
+        "mlx_fp32": 0.33268261962206125,
+        "mlx_int8": 0.31411607764289984
+      },
+      "mlx_int8_vs_mlx_fp32_speedup": 0.9441914278532084,
+      "max_abs_diff_vs_pytorch_fp32": 0.014329910278320312
+    },
+    {
+      "model_batch_size": 4,
+      "effective_rows": 4,
+      "pytorch_fp32_us": 140.52555333667746,
+      "pytorch_fp16_us": 118.29958316714813,
+      "mlx_fp32_us": 398.6922199449813,
+      "mlx_int8_us": 585.6973598323142,
+      "speedup_vs_fp32": {
+        "pytorch_fp16": 1.1878786854060657,
+        "mlx_fp32": 0.35246625418491917,
+        "mlx_int8": 0.23992860984879646
+      },
+      "mlx_int8_vs_mlx_fp32_speedup": 0.6807137052130938,
+      "max_abs_diff_vs_pytorch_fp32": 0.01775503158569336
+    },
+    {
+      "model_batch_size": 1,
+      "effective_rows": 16,
+      "pytorch_fp32_us": 134.98110987711698,
+      "pytorch_fp16_us": 69.43069650636366,
+      "mlx_fp32_us": 301.920833492962,
+      "mlx_int8_us": 306.97041656821966,
+      "speedup_vs_fp32": {
+        "pytorch_fp16": 1.9441128588526448,
+        "mlx_fp32": 0.4470745139230794,
+        "mlx_int8": 0.43972025508562135
+      },
+      "mlx_int8_vs_mlx_fp32_speedup": 0.9835502615147429,
+      "max_abs_diff_vs_pytorch_fp32": 0.019701331853866577
+    },
+    {
+      "model_batch_size": 16,
+      "effective_rows": 16,
+      "pytorch_fp32_us": 276.66138989540434,
+      "pytorch_fp16_us": 241.74403011177978,
+      "mlx_fp32_us": 672.9780566335345,
+      "mlx_int8_us": 641.9704165697719,
+      "speedup_vs_fp32": {
+        "pytorch_fp16": 1.1444393880894563,
+        "mlx_fp32": 0.41110016466117616,
+        "mlx_int8": 0.43095660291276944
+      },
+      "mlx_int8_vs_mlx_fp32_speedup": 1.0483007304751597,
+      "max_abs_diff_vs_pytorch_fp32": 0.015543222427368164
+    },
+    {
+      "model_batch_size": 16,
+      "effective_rows": 16,
+      "pytorch_fp32_us": 300.00277988923096,
+      "pytorch_fp16_us": 239.41000011594346,
+      "mlx_fp32_us": 547.8994466830045,
+      "mlx_int8_us": 616.8637500377372,
+      "speedup_vs_fp32": {
+        "pytorch_fp16": 1.253092100346448,
+        "mlx_fp32": 0.5475507991574996,
+        "mlx_int8": 0.4863355641677405
+      },
+      "mlx_int8_vs_mlx_fp32_speedup": 0.8882017246912083,
+      "max_abs_diff_vs_pytorch_fp32": 0.01813662052154541
+    },
+    {
+      "model_batch_size": 32,
+      "effective_rows": 32,
+      "pytorch_fp32_us": 514.3931932980195,
+      "pytorch_fp16_us": 433.4413898565496,
+      "mlx_fp32_us": 1008.3319466017808,
+      "mlx_int8_us": 1052.0269432648395,
+      "speedup_vs_fp32": {
+        "pytorch_fp16": 1.1867652820794556,
+        "mlx_fp32": 0.5101427114667905,
+        "mlx_int8": 0.48895439094141624
+      },
+      "mlx_int8_vs_mlx_fp32_speedup": 0.9584658958187359,
+      "max_abs_diff_vs_pytorch_fp32": 0.014728546142578125
+    },
+    {
+      "model_batch_size": 32,
+      "effective_rows": 32,
+      "pytorch_fp32_us": 479.5347233690942,
+      "pytorch_fp16_us": 420.4118032551681,
+      "mlx_fp32_us": 885.9084732830524,
+      "mlx_int8_us": 926.7011100503927,
+      "speedup_vs_fp32": {
+        "pytorch_fp16": 1.1406309710054492,
+        "mlx_fp32": 0.541291496617033,
+        "mlx_int8": 0.5174642807355846
+      },
+      "mlx_int8_vs_mlx_fp32_speedup": 0.9559808051108064,
+      "max_abs_diff_vs_pytorch_fp32": 0.018123626708984375
+    },
+    {
+      "model_batch_size": 4,
+      "effective_rows": 64,
+      "pytorch_fp32_us": 245.995416577595,
+      "pytorch_fp16_us": 192.2362499559919,
+      "mlx_fp32_us": 504.66249987948686,
+      "mlx_int8_us": 526.3051365424568,
+      "speedup_vs_fp32": {
+        "pytorch_fp16": 1.2796515570497762,
+        "mlx_fp32": 0.48744540487224347,
+        "mlx_int8": 0.4674007519547563
+      },
+      "mlx_int8_vs_mlx_fp32_speedup": 0.9588781580108633,
+      "max_abs_diff_vs_pytorch_fp32": 0.02003488875925541
+    },
+    {
+      "model_batch_size": 16,
+      "effective_rows": 256,
+      "pytorch_fp32_us": 668.9358333824202,
+      "pytorch_fp16_us": 557.8591666805247,
+      "mlx_fp32_us": 1284.9831965286285,
+      "mlx_int8_us": 1316.449583391659,
+      "speedup_vs_fp32": {
+        "pytorch_fp16": 1.1991123805724018,
+        "mlx_fp32": 0.520579440407894,
+        "mlx_int8": 0.5081363098304116
+      },
+      "mlx_int8_vs_mlx_fp32_speedup": 0.9760975374522421,
+      "max_abs_diff_vs_pytorch_fp32": 0.02226075530052185
+    },
+    {
+      "model_batch_size": 32,
+      "effective_rows": 512,
+      "pytorch_fp32_us": 1250.1654166650649,
+      "pytorch_fp16_us": 1097.7831933026512,
+      "mlx_fp32_us": 2278.2458333919444,
+      "mlx_int8_us": 2279.0906933369115,
+      "speedup_vs_fp32": {
+        "pytorch_fp16": 1.1388090328692095,
+        "mlx_fp32": 0.5487403502912449,
+        "mlx_int8": 0.5485369319966138
+      },
+      "mlx_int8_vs_mlx_fp32_speedup": 0.9996292995502825,
+      "max_abs_diff_vs_pytorch_fp32": 0.022482722997665405
+    }
+  ]
+}

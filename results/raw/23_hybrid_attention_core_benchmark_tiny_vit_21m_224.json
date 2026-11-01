@@ -1,0 +1,199 @@
+{
+  "phase": "23_hybrid_attention_core_benchmark",
+  "variant": "tiny_vit_21m_224",
+  "methodology_note": "Fuses ONLY the attention core (QK^T*scale+bias, softmax, AV) into one native MPS dispatch (fusion/native/fused_attention_core_template.mm), leaving PyTorch's own LayerNorm and Linear for norm/QKV/proj -- unlike Phase 22's full-block fusion. window_size=14 blocks use a row-tiled variant (N=196's dense score matrix doesn't fit on-chip either) but are excluded from the full-model test since isolated testing found fusing them hurts, not just fails to help. The combined_stack check additionally tests whether the kernel fusion adds anything on top of fusion/best_model.build_best_model (this project's actual deployable optimization), not just against an unmodified baseline.",
+  "isolated_window_size_7": {
+    "stage_idx": 1,
+    "window_size": 7,
+    "dim": 192,
+    "correctness": {
+      "max_abs_diff": 1.52587890625e-05
+    },
+    "results": [
+      {
+        "batch_windows": 16,
+        "baseline_us": 397.0204199140426,
+        "hybrid_us": 307.4120900419075,
+        "speedup": 1.291492536483908
+      },
+      {
+        "batch_windows": 32,
+        "baseline_us": 525.0000000523869,
+        "hybrid_us": 464.7929199563805,
+        "speedup": 1.129535277993599
+      },
+      {
+        "batch_windows": 64,
+        "baseline_us": 1008.2358399813528,
+        "hybrid_us": 877.5862499896903,
+        "speedup": 1.1488737887509033
+      },
+      {
+        "batch_windows": 128,
+        "baseline_us": 2175.7395900203846,
+        "hybrid_us": 2086.5237500402145,
+        "speedup": 1.042758123399482
+      },
+      {
+        "batch_windows": 256,
+        "baseline_us": 4912.9012499179225,
+        "hybrid_us": 5172.854580014246,
+        "speedup": 0.9497466387126606
+      },
+      {
+        "batch_windows": 512,
+        "baseline_us": 10748.484579962678,
+        "hybrid_us": 8744.509160023881,
+        "speedup": 1.229169571815432
+      }
+    ],
+    "mean_speedup": 1.1319293228593308
+  },
+  "isolated_window_size_14_tiled": {
+    "stage_idx": 2,
+    "window_size": 14,
+    "dim": 384,
+    "correctness": {
+      "max_abs_diff": 1.71661376953125e-05
+    },
+    "results": [
+      {
+        "batch_windows": 16,
+        "baseline_us": 3987.580829998478,
+        "hybrid_us": 5610.6970900145825,
+        "speedup": 0.710710410136954
+      },
+      {
+        "batch_windows": 32,
+        "baseline_us": 8147.848330117995,
+        "hybrid_us": 11523.851670062868,
+        "speedup": 0.7070421039247501
+      },
+      {
+        "batch_windows": 64,
+        "baseline_us": 17529.049170116195,
+        "hybrid_us": 25926.686660095584,
+        "speedup": 0.6761006294373741
+      },
+      {
+        "batch_windows": 128,
+        "baseline_us": 40478.14790988923,
+        "hybrid_us": 45479.933750029886,
+        "speedup": 0.8900221388265024
+      },
+      {
+        "batch_windows": 256,
+        "baseline_us": 82008.19167002919,
+        "hybrid_us": 93657.21917012706,
+        "speedup": 0.8756206130897655
+      },
+      {
+        "batch_windows": 512,
+        "baseline_us": 177056.95249998826,
+        "hybrid_us": 193281.58417003579,
+        "speedup": 0.9160570225057022
+      }
+    ],
+    "mean_speedup": 0.7959254863201748
+  },
+  "full_model": {
+    "blocks_patched": 4,
+    "blocks_skipped": 6,
+    "correctness": {
+      "max_abs_diff": 1.1622905731201172e-06,
+      "top1_match": true
+    },
+    "results": [
+      {
+        "batch_size": 1,
+        "baseline_ms": 8.96231081977021,
+        "hybrid_ms": 9.457860820111819,
+        "speedup": 0.9476044308785091
+      },
+      {
+        "batch_size": 4,
+        "baseline_ms": 32.89065749995643,
+        "hybrid_ms": 35.034162499941885,
+        "speedup": 0.9388167192525578
+      },
+      {
+        "batch_size": 16,
+        "baseline_ms": 163.0328074999852,
+        "hybrid_ms": 173.58360166021157,
+        "speedup": 0.9392177944269214
+      },
+      {
+        "batch_size": 32,
+        "baseline_ms": 340.3411325000343,
+        "hybrid_ms": 333.4213416799321,
+        "speedup": 1.0207538929129043
+      }
+    ],
+    "mean_speedup": 0.9615982093677231
+  },
+  "combined_stack": {
+    "blocks_patched": 4,
+    "blocks_skipped": 6,
+    "correctness": {
+      "best_vs_baseline": {
+        "max_abs_diff": 1.4901161193847656e-06,
+        "top1_match": true
+      },
+      "best_plus_kernel_vs_baseline": {
+        "max_abs_diff": 1.6093254089355469e-06,
+        "top1_match": true
+      }
+    },
+    "results": [
+      {
+        "batch_size": 1,
+        "baseline_ms": 9.323589999985415,
+        "best_ms": 8.777655839803629,
+        "best_plus_kernel_ms": 9.650324999820441,
+        "speedup_vs_baseline": {
+          "best": 1.0621958949115053,
+          "best_plus_kernel": 0.9661425910690982
+        },
+        "speedup_of_kernel_over_best": 0.9095710082268679
+      },
+      {
+        "batch_size": 4,
+        "baseline_ms": 42.74843666004017,
+        "best_ms": 38.49966833979124,
+        "best_plus_kernel_ms": 36.471117500041146,
+        "speedup_vs_baseline": {
+          "best": 1.110358569397275,
+          "best_plus_kernel": 1.1721175436971993
+        },
+        "speedup_of_kernel_over_best": 1.0556207481097286
+      },
+      {
+        "batch_size": 16,
+        "baseline_ms": 184.76752499991562,
+        "best_ms": 151.37884583993582,
+        "best_plus_kernel_ms": 143.65174000005936,
+        "speedup_vs_baseline": {
+          "best": 1.2205637054155118,
+          "best_plus_kernel": 1.2862184962036607
+        },
+        "speedup_of_kernel_over_best": 1.0537905481679044
+      },
+      {
+        "batch_size": 32,
+        "baseline_ms": 331.17191333993105,
+        "best_ms": 318.2460908399662,
+        "best_plus_kernel_ms": 297.6063024997711,
+        "speedup_vs_baseline": {
+          "best": 1.0406158091866862,
+          "best_plus_kernel": 1.1127852822948392
+        },
+        "speedup_of_kernel_over_best": 1.0693526587536262
+      }
+    ],
+    "mean_speedup_vs_baseline": {
+      "best": 1.1084334947277446,
+      "best_plus_kernel": 1.1343159783161993
+    },
+    "mean_speedup_of_kernel_over_best": 1.0220837408145318
+  }
+}

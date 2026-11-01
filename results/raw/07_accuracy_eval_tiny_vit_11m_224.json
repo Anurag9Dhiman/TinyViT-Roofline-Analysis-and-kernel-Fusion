@@ -1,0 +1,65 @@
+{
+  "phase": "07_accuracy_eval",
+  "variant": "tiny_vit_11m_224",
+  "num_images": 1000,
+  "images_per_class_target": 1,
+  "methodology_note": "Each arm evaluated in a separate subprocess with a cooldown pause between them, to avoid both MPS allocator fragmentation and thermal throttling (this is a fanless MacBook Air) confounding the cross-model speed comparison -- see this script's module docstring for the specific contradiction that motivated the redesign.",
+  "results": {
+    "pytorch_baseline": {
+      "arm": "pytorch_baseline",
+      "top1_acc": 0.846,
+      "top5_acc": 0.964,
+      "n": 1000,
+      "compute_time_s": 4.788431167602539
+    },
+    "pytorch_optimized": {
+      "arm": "pytorch_optimized",
+      "top1_acc": 0.846,
+      "top5_acc": 0.964,
+      "n": 1000,
+      "compute_time_s": 11.414795875549316
+    },
+    "mlx_fused_hybrid": {
+      "arm": "mlx_fused_hybrid",
+      "top1_acc": 0.846,
+      "top5_acc": 0.964,
+      "n": 1000,
+      "compute_time_s": 5.5871758460998535
+    },
+    "pytorch_conv_bn_fused": {
+      "arm": "pytorch_conv_bn_fused",
+      "top1_acc": 0.846,
+      "top5_acc": 0.964,
+      "n": 1000,
+      "compute_time_s": 4.028804302215576
+    },
+    "pytorch_conv_bn_fused_channels_last": {
+      "arm": "pytorch_conv_bn_fused_channels_last",
+      "top1_acc": 0.846,
+      "top5_acc": 0.964,
+      "n": 1000,
+      "compute_time_s": 3.9490177631378174
+    },
+    "pytorch_conv_bn_fused_channels_last_fp16": {
+      "arm": "pytorch_conv_bn_fused_channels_last_fp16",
+      "top1_acc": 0.846,
+      "top5_acc": 0.965,
+      "n": 1000,
+      "compute_time_s": 3.3065438270568848
+    }
+  },
+  "top1_prediction_agreement_vs_baseline": {
+    "pytorch_optimized": 1.0,
+    "mlx_fused_hybrid": 1.0,
+    "pytorch_conv_bn_fused": 1.0,
+    "pytorch_conv_bn_fused_channels_last": 1.0,
+    "pytorch_conv_bn_fused_channels_last_fp16": 0.997
+  },
+  "accuracy_difference_top1_pp": {
+    "pytorch_optimized": 0.0,
+    "mlx_fused_hybrid": 0.0,
+    "pytorch_conv_bn_fused": 0.0,
+    "pytorch_conv_bn_fused_channels_last": 0.0,
+    "pytorch_conv_bn_fused_channels_last_fp16": 0.0
+  }
+}

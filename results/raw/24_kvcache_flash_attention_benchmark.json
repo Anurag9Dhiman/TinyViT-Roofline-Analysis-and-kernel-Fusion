@@ -1,0 +1,792 @@
+{
+  "phase": "24_kvcache_flash_attention_benchmark",
+  "methodology_note": "Fuses the attention core (QK^T*scale+bias, softmax, AV) for window_size=14 blocks into one native MPS dispatch using online/streaming softmax (simdgroup_half8x8 tile ops) with K/V cached once per (window, head) in threadgroup memory and shared across all ~25 query-tile simdgroups, instead of each tile independently re-reading K/V from device memory. See this script's module docstring for the full 5-design history and why each earlier one failed.",
+  "memory_traffic": {
+    "tiny_vit_5m_224": {
+      "N": 196,
+      "key_dim": 32,
+      "val_dim": 32,
+      "num_heads": 5,
+      "num_query_tiles": 25,
+      "kv_bytes_per_window_head_fp16": 25088,
+      "old_design_bytes_per_window_head": 627200,
+      "new_design_bytes_per_window_head": 25088,
+      "redundancy_factor_removed": 25,
+      "pct_kv_traffic_reduction": 96.0,
+      "old_design_total_bytes_batch1": 3136000,
+      "new_design_total_bytes_batch1": 125440,
+      "bytes_saved_batch1": 3010560
+    },
+    "tiny_vit_11m_224": {
+      "N": 196,
+      "key_dim": 32,
+      "val_dim": 32,
+      "num_heads": 8,
+      "num_query_tiles": 25,
+      "kv_bytes_per_window_head_fp16": 25088,
+      "old_design_bytes_per_window_head": 627200,
+      "new_design_bytes_per_window_head": 25088,
+      "redundancy_factor_removed": 25,
+      "pct_kv_traffic_reduction": 96.0,
+      "old_design_total_bytes_batch1": 5017600,
+      "new_design_total_bytes_batch1": 200704,
+      "bytes_saved_batch1": 4816896
+    },
+    "tiny_vit_21m_224": {
+      "N": 196,
+      "key_dim": 32,
+      "val_dim": 32,
+      "num_heads": 12,
+      "num_query_tiles": 25,
+      "kv_bytes_per_window_head_fp16": 25088,
+      "old_design_bytes_per_window_head": 627200,
+      "new_design_bytes_per_window_head": 25088,
+      "redundancy_factor_removed": 25,
+      "pct_kv_traffic_reduction": 96.0,
+      "old_design_total_bytes_batch1": 7526400,
+      "new_design_total_bytes_batch1": 301056,
+      "bytes_saved_batch1": 7225344
+    }
+  },
+  "kernel_launch_count": {
+    "variant_measured_on": "tiny_vit_5m_224",
+    "profiler_total_events_per_iter": {
+      "baseline_whole_attention_module": 38.0,
+      "kvcache_whole_attention_module_aten_visible": 18.0
+    },
+    "attention_core_specific_dispatch_count": {
+      "baseline_aten_level_calls_per_iter": 7.0,
+      "kvcache_raw_metal_dispatches_per_call": 1,
+      "reduction_factor": 7.0
+    },
+    "methodology_note": "baseline_aten_level_calls_per_iter counts the PyTorch-dispatcher-visible ops specific to feeding Q/K/V into SDPA and reading its output (split_with_sizes, expand, transpose, reshape, clone, scaled_dot_product_attention, and its MPS math fallback) -- SDPA's own internal Metal dispatch count is NOT visible to torch.profiler on this backend (flagged in this project's README methodology notes since Phase 1), so this is a dispatch-overhead proxy, not a verified Metal-level count, for the baseline side. kvcache_raw_metal_dispatches_per_call=1 is NOT a profiler measurement -- it is read directly from the kernel's own .mm source (exactly one dispatchThreadgroups call per forward()), because the custom kernel is called directly via pybind11 and is completely invisible to torch.profiler (zero matching events), itself a concrete instance of the same limitation."
+  },
+  "per_variant": {
+    "tiny_vit_5m_224": {
+      "correctness": {
+        "n_patched": 6,
+        "real_shape": {
+          "N": 196,
+          "num_heads": 5,
+          "key_dim": 32,
+          "val_dim": 32,
+          "out_dim": 160
+        },
+        "max_abs_diff": 0.00028002262115478516,
+        "top1_match": true
+      },
+      "speed": {
+        "1": {
+          "speedups": [
+            1.0219438929955214,
+            1.0374728494595697,
+            1.049976872360396,
+            0.9867873472112854,
+            0.9996546324592044,
+            1.0494093870371461,
+            1.0165428114048802,
+            1.0026435277623647,
+            1.019418601584398,
+            1.0346233047816213,
+            1.0338575762472095,
+            1.0299527138334101,
+            0.991577123625537,
+            0.9901909362364812,
+            1.015810488927278
+          ],
+          "stats": {
+            "mean": 1.0186574710617535,
+            "std": 0.02086528577114758,
+            "min": 0.9867873472112854,
+            "max": 1.049976872360396,
+            "n": 15
+          },
+          "baseline_latency_ms_stats": {
+            "mean": 4.386816355108749,
+            "std": 0.14262977562277973,
+            "min": 4.264355000341311,
+            "max": 4.685072500142269,
+            "n": 8
+          },
+          "kvcache_latency_ms_stats": {
+            "mean": 4.383976147510111,
+            "std": 0.09349763131563686,
+            "min": 4.2573108401848,
+            "max": 4.557223320007324,
+            "n": 8
+          },
+          "baseline_throughput_img_per_s": 227.95574718677963,
+          "kvcache_throughput_img_per_s": 228.10343084734896
+        },
+        "4": {
+          "speedups": [
+            1.0304903526315825,
+            1.029119870779842,
+            1.034769904584099,
+            1.0332170942787515,
+            1.0314458710524204,
+            1.0324380108517717,
+            1.027786241316406,
+            1.0346852085886529,
+            1.0320471351271705,
+            1.032479605067289,
+            1.03040355131558,
+            1.0291676960372398
+          ],
+          "stats": {
+            "mean": 1.031504211802567,
+            "std": 0.00219598921248356,
+            "min": 1.027786241316406,
+            "max": 1.034769904584099,
+            "n": 12
+          },
+          "baseline_latency_ms_stats": {
+            "mean": 14.572391767360386,
+            "std": 0.05852381218125519,
+            "min": 14.514009999693371,
+            "max": 14.669254159671254,
+            "n": 8
+          },
+          "kvcache_latency_ms_stats": {
+            "mean": 14.102085519916727,
+            "std": 0.023138399969217426,
+            "min": 14.075139159685932,
+            "max": 14.140375819988549,
+            "n": 8
+          },
+          "baseline_throughput_img_per_s": 274.4916595612878,
+          "kvcache_throughput_img_per_s": 283.6459894070774
+        },
+        "16": {
+          "speedups": [
+            1.051663569745685,
+            1.0338322075224453,
+            1.0392760195660475,
+            1.037962921154474,
+            1.034296078759937,
+            1.0358136583814912,
+            1.0326038587700626,
+            1.0140951680787114,
+            1.0459797740459855,
+            1.0312483264434362,
+            1.032900746022696,
+            1.037403548162072,
+            1.0371546119452586,
+            1.0139807633481186,
+            1.0360549663271736,
+            1.0363489502614298,
+            1.037335717584735,
+            1.036225733212131
+          ],
+          "stats": {
+            "mean": 1.0346764788517717,
+            "std": 0.008908965328221932,
+            "min": 1.0139807633481186,
+            "max": 1.051663569745685,
+            "n": 18
+          },
+          "baseline_latency_ms_stats": {
+            "mean": 55.30871771246893,
+            "std": 0.3724597938741382,
+            "min": 54.867460819659755,
+            "max": 55.90251668007113,
+            "n": 8
+          },
+          "kvcache_latency_ms_stats": {
+            "mean": 53.583135524895624,
+            "std": 0.35599018067388566,
+            "min": 52.96911083976738,
+            "max": 54.21519500028808,
+            "n": 8
+          },
+          "baseline_throughput_img_per_s": 289.28531815144436,
+          "kvcache_throughput_img_per_s": 298.60141336010713
+        },
+        "32": {
+          "speedups": [
+            1.0765029514786362,
+            1.045490347344535,
+            1.0484395309838674,
+            1.034002059806448,
+            1.0455192916388332,
+            1.054274280944569,
+            1.0569326874672693,
+            1.0615743158153532,
+            1.0614530132639466,
+            1.067329462070535,
+            1.0613045379906632,
+            1.0456270782382104
+          ],
+          "stats": {
+            "mean": 1.0548707964202388,
+            "std": 0.011658733068735706,
+            "min": 1.034002059806448,
+            "max": 1.0765029514786362,
+            "n": 12
+          },
+          "baseline_latency_ms_stats": {
+            "mean": 111.87233312499302,
+            "std": 3.8520189082307867,
+            "min": 108.89849584025797,
+            "max": 118.3499808399938,
+            "n": 8
+          },
+          "kvcache_latency_ms_stats": {
+            "mean": 111.87714656240132,
+            "std": 7.913048895021221,
+            "min": 105.38683165970724,
+            "max": 127.30227415973785,
+            "n": 8
+          },
+          "baseline_throughput_img_per_s": 286.040338179476,
+          "kvcache_throughput_img_per_s": 286.0280314903408
+        },
+        "64": {
+          "speedups": [
+            1.0676532222541977,
+            0.9915269652641877,
+            1.0084043933305011,
+            1.0505301025813312,
+            1.04318209217615,
+            1.1224379647319471,
+            1.0449012103390196,
+            1.0511548258022954,
+            1.0460309614368302,
+            1.0433586926040705,
+            1.0408928040176844,
+            1.0493144569226045
+          ],
+          "stats": {
+            "mean": 1.0466156409550682,
+            "std": 0.03131671934466577,
+            "min": 0.9915269652641877,
+            "max": 1.1224379647319471,
+            "n": 12
+          },
+          "baseline_latency_ms_stats": {
+            "mean": 284.8032818725187,
+            "std": 32.68709965102991,
+            "min": 238.20674334012438,
+            "max": 318.94613833981566,
+            "n": 8
+          },
+          "kvcache_latency_ms_stats": {
+            "mean": 277.4488587499218,
+            "std": 27.937958283212637,
+            "min": 232.89996833947953,
+            "max": 314.86814582021907,
+            "n": 8
+          },
+          "baseline_throughput_img_per_s": 224.7165116188765,
+          "kvcache_throughput_img_per_s": 230.67314202826236
+        }
+      },
+      "accuracy_20k": {
+        "num_images": 20000,
+        "images_per_class": 20,
+        "results": {
+          "pytorch_baseline": {
+            "arm": "pytorch_baseline",
+            "top1_acc": 0.80905,
+            "top5_acc": 0.95645,
+            "n": 20000,
+            "compute_time_s": 150.95438885688782
+          },
+          "kvcache_fp16": {
+            "arm": "kvcache_fp16",
+            "top1_acc": 0.80895,
+            "top5_acc": 0.9565,
+            "n": 20000,
+            "compute_time_s": 120.63599705696106
+          }
+        },
+        "top1_prediction_agreement_vs_baseline": 0.9998,
+        "accuracy_difference_top1_pp": -0.010000000000010001,
+        "accuracy_difference_top5_pp": 0.004999999999999449,
+        "compute_speedup_over_20k_run": 1.2513212684403912
+      }
+    },
+    "tiny_vit_11m_224": {
+      "correctness": {
+        "n_patched": 6,
+        "real_shape": {
+          "N": 196,
+          "num_heads": 8,
+          "key_dim": 32,
+          "val_dim": 32,
+          "out_dim": 256
+        },
+        "max_abs_diff": 0.0007795095443725586,
+        "top1_match": true
+      },
+      "speed": {
+        "1": {
+          "speedups": [
+            1.0639490810252803,
+            1.0918991590680966,
+            1.095088905093615,
+            1.0694450905793715,
+            1.068905591668064,
+            1.0759946190163203,
+            1.092058985513989,
+            1.0688703603835512,
+            1.067237695249268,
+            1.0716770308772525,
+            1.0686205698348292,
+            1.070652789374842,
+            1.0664520130053388,
+            1.0939827815070675,
+            1.0705946101786812
+          ],
+          "stats": {
+            "mean": 1.0756952854917046,
+            "std": 0.011292535894086353,
+            "min": 1.0639490810252803,
+            "max": 1.095088905093615,
+            "n": 15
+          },
+          "baseline_latency_ms_stats": {
+            "mean": 5.353689272451447,
+            "std": 0.03406048806628695,
+            "min": 5.333780840155669,
+            "max": 5.423736679949798,
+            "n": 8
+          },
+          "kvcache_latency_ms_stats": {
+            "mean": 5.022809482397861,
+            "std": 0.006749171022540386,
+            "min": 5.011628339998424,
+            "max": 5.036165839992464,
+            "n": 8
+          },
+          "baseline_throughput_img_per_s": 186.7870825349752,
+          "kvcache_throughput_img_per_s": 199.09176398277518
+        },
+        "4": {
+          "speedups": [
+            1.048364745624012,
+            1.0473996911210612,
+            1.0486718182089656,
+            1.047343026626016,
+            1.0510208810209243,
+            1.0495791095164697,
+            1.0501221376984944,
+            1.0522051189638324,
+            1.0495011763925426,
+            1.0498620725570094,
+            1.0489219411973691,
+            1.0485349019426953
+          ],
+          "stats": {
+            "mean": 1.0492938850724494,
+            "std": 0.0014125877034604315,
+            "min": 1.047343026626016,
+            "max": 1.0522051189638324,
+            "n": 12
+          },
+          "baseline_latency_ms_stats": {
+            "mean": 18.980442712563672,
+            "std": 0.02380073818181735,
+            "min": 18.938719180296175,
+            "max": 19.01525749999564,
+            "n": 8
+          },
+          "kvcache_latency_ms_stats": {
+            "mean": 18.079150000048685,
+            "std": 0.01926252722425883,
+            "min": 18.056499999947846,
+            "max": 18.11955749988556,
+            "n": 8
+          },
+          "baseline_throughput_img_per_s": 210.74324032243416,
+          "kvcache_throughput_img_per_s": 221.249339708406
+        },
+        "16": {
+          "speedups": [
+            1.0393830796771883,
+            1.0392212987812854,
+            1.0395273574446846,
+            1.042051093620302,
+            1.034263700839012,
+            1.0416360206404738,
+            1.0394032011985128,
+            1.0415255786672375,
+            1.0584246012860623,
+            1.0216421689873052,
+            0.9940031952289619,
+            1.0107699877768288,
+            0.9893391332863877,
+            1.0045260339954363,
+            0.996538448376272,
+            1.0004914310451,
+            1.0722810454174005,
+            1.0166519783727554
+          ],
+          "stats": {
+            "mean": 1.0267599641467338,
+            "std": 0.023510747776815485,
+            "min": 0.9893391332863877,
+            "max": 1.0722810454174005,
+            "n": 18
+          },
+          "baseline_latency_ms_stats": {
+            "mean": 72.29119166491728,
+            "std": 0.7851743484282542,
+            "min": 71.80425333965104,
+            "max": 73.57971250021365,
+            "n": 8
+          },
+          "kvcache_latency_ms_stats": {
+            "mean": 71.23876479250612,
+            "std": 3.97622666393277,
+            "min": 68.90161000017542,
+            "max": 78.65609999978915,
+            "n": 8
+          },
+          "baseline_throughput_img_per_s": 221.32710267335042,
+          "kvcache_throughput_img_per_s": 224.59681953501675
+        },
+        "32": {
+          "speedups": [
+            1.117799930919097,
+            1.0473707628029385,
+            1.027578984422057,
+            1.0263116647894195,
+            1.069253407780796,
+            1.0234346694937169,
+            1.0682802724876967,
+            1.063551958474062,
+            1.069317802641435,
+            1.070728772482532,
+            1.087329164748688,
+            1.0729409750273329
+          ],
+          "stats": {
+            "mean": 1.0619915305058143,
+            "std": 0.027400845805392152,
+            "min": 1.0234346694937169,
+            "max": 1.117799930919097,
+            "n": 12
+          },
+          "baseline_latency_ms_stats": {
+            "mean": 206.19015010495787,
+            "std": 36.69826419428745,
+            "min": 161.73814499983564,
+            "max": 269.3325541599188,
+            "n": 8
+          },
+          "kvcache_latency_ms_stats": {
+            "mean": 200.13165010488592,
+            "std": 22.73375074959092,
+            "min": 167.72841916012112,
+            "max": 224.46556417969987,
+            "n": 8
+          },
+          "baseline_throughput_img_per_s": 155.1965502896763,
+          "kvcache_throughput_img_per_s": 159.89474919748722
+        },
+        "64": {
+          "speedups": [
+            1.05640078494558,
+            0.9979354081954399,
+            1.0409047553125348,
+            1.0591666265949184,
+            1.0645843684803453,
+            1.0613182072517489,
+            1.0544118828471052,
+            1.044631350086278,
+            1.0550720809964806,
+            1.0520253108014697,
+            1.0468719297778823,
+            1.0537631369836253
+          ],
+          "stats": {
+            "mean": 1.0489238201894506,
+            "std": 0.017444485909726498,
+            "min": 0.9979354081954399,
+            "max": 1.0645843684803453,
+            "n": 12
+          },
+          "baseline_latency_ms_stats": {
+            "mean": 448.32358311999997,
+            "std": 21.2001596869606,
+            "min": 413.3785875001922,
+            "max": 478.32269999955315,
+            "n": 8
+          },
+          "kvcache_latency_ms_stats": {
+            "mean": 422.90926572743047,
+            "std": 30.77708247383196,
+            "min": 364.1784808400553,
+            "max": 471.76337749988306,
+            "n": 8
+          },
+          "baseline_throughput_img_per_s": 142.75403393818237,
+          "kvcache_throughput_img_per_s": 151.332697546638
+        }
+      },
+      "accuracy_20k": {
+        "num_images": 20000,
+        "images_per_class": 20,
+        "results": {
+          "pytorch_baseline": {
+            "arm": "pytorch_baseline",
+            "top1_acc": 0.83035,
+            "top5_acc": 0.96535,
+            "n": 20000,
+            "compute_time_s": 177.5125539302826
+          },
+          "kvcache_fp16": {
+            "arm": "kvcache_fp16",
+            "top1_acc": 0.8304,
+            "top5_acc": 0.9653,
+            "n": 20000,
+            "compute_time_s": 163.36911582946777
+          }
+        },
+        "top1_prediction_agreement_vs_baseline": 0.9998,
+        "accuracy_difference_top1_pp": 0.004999999999999449,
+        "accuracy_difference_top5_pp": -0.004999999999999449,
+        "compute_speedup_over_20k_run": 1.086573511945663
+      }
+    },
+    "tiny_vit_21m_224": {
+      "correctness": {
+        "n_patched": 6,
+        "real_shape": {
+          "N": 196,
+          "num_heads": 12,
+          "key_dim": 32,
+          "val_dim": 32,
+          "out_dim": 384
+        },
+        "max_abs_diff": 0.0010698437690734863,
+        "top1_match": true
+      },
+      "speed": {
+        "1": {
+          "speedups": [
+            0.9722469925694421,
+            1.0359380595970435,
+            1.0090489544964967,
+            1.0315333482431635,
+            1.0331031600630292,
+            1.0311720804332656,
+            1.0315801029980451,
+            1.0329420816239356,
+            1.0334337629184627,
+            1.0307540619594202,
+            1.0281928695487523,
+            1.0314994693700865,
+            1.0286732773306269,
+            1.0292783291849434,
+            1.0299438168613444
+          ],
+          "stats": {
+            "mean": 1.0259560244798704,
+            "std": 0.01605565183661673,
+            "min": 0.9722469925694421,
+            "max": 1.0359380595970435,
+            "n": 15
+          },
+          "baseline_latency_ms_stats": {
+            "mean": 8.928056770018884,
+            "std": 0.013011687447202748,
+            "min": 8.904126660199836,
+            "max": 8.940829160274006,
+            "n": 8
+          },
+          "kvcache_latency_ms_stats": {
+            "mean": 8.828584065122413,
+            "std": 0.23896799089541756,
+            "min": 8.699014179874212,
+            "max": 9.388260000268929,
+            "n": 8
+          },
+          "baseline_throughput_img_per_s": 112.00645624903267,
+          "kvcache_throughput_img_per_s": 113.26844629033211
+        },
+        "4": {
+          "speedups": [
+            1.041678195307003,
+            1.0424414816328438,
+            1.0458133768110762,
+            1.0408096966563642,
+            1.0443729789539145,
+            1.0382488048524485,
+            1.042224131975039,
+            1.0447398706086146,
+            1.0475198095559772,
+            1.0422444665330164,
+            1.0436476926180458,
+            1.0353678485161406
+          ],
+          "stats": {
+            "mean": 1.0424256961683736,
+            "std": 0.003283159900376534,
+            "min": 1.0353678485161406,
+            "max": 1.0475198095559772,
+            "n": 12
+          },
+          "baseline_latency_ms_stats": {
+            "mean": 31.693336664975504,
+            "std": 0.10092773050940933,
+            "min": 31.48525331984274,
+            "max": 31.821965840063054,
+            "n": 8
+          },
+          "kvcache_latency_ms_stats": {
+            "mean": 30.48794156005897,
+            "std": 0.06904830443545958,
+            "min": 30.414749159826897,
+            "max": 30.612154160044156,
+            "n": 8
+          },
+          "baseline_throughput_img_per_s": 126.20949451562238,
+          "kvcache_throughput_img_per_s": 131.19941181074157
+        },
+        "16": {
+          "speedups": [
+            1.0442837950510364,
+            0.9608274654554039,
+            0.9779186318437727,
+            1.0126998486199772,
+            1.0297649870178367,
+            1.0329067035963178,
+            1.0341703193417129,
+            1.044374454496995,
+            1.0375814550289968,
+            1.0485052667302301,
+            1.0357206086291795,
+            1.0396689719860657
+          ],
+          "stats": {
+            "mean": 1.0248685423164603,
+            "std": 0.027705113721526644,
+            "min": 0.9608274654554039,
+            "max": 1.0485052667302301,
+            "n": 12
+          },
+          "baseline_latency_ms_stats": {
+            "mean": 143.57613594016584,
+            "std": 17.072676332315776,
+            "min": 122.0722891605692,
+            "max": 166.2792083399836,
+            "n": 8
+          },
+          "kvcache_latency_ms_stats": {
+            "mean": 144.87395489486516,
+            "std": 16.72465366418108,
+            "min": 118.30809750012122,
+            "max": 160.72769749967847,
+            "n": 8
+          },
+          "baseline_throughput_img_per_s": 111.43913224317353,
+          "kvcache_throughput_img_per_s": 110.44083121504607
+        },
+        "32": {
+          "speedups": [
+            1.004317082580592,
+            0.9050725820270793,
+            0.991783129056205,
+            1.1086639611693239,
+            1.0684059254109104,
+            1.0440897484469533,
+            1.048601210023286,
+            1.046306203500064,
+            1.0397848052967487,
+            1.0408874395841972,
+            1.0396590878084973,
+            1.0450931189722392
+          ],
+          "stats": {
+            "mean": 1.0318886911563414,
+            "std": 0.04926092545785518,
+            "min": 0.9050725820270793,
+            "max": 1.1086639611693239,
+            "n": 12
+          },
+          "baseline_latency_ms_stats": {
+            "mean": 441.28610385247157,
+            "std": 57.355078973415885,
+            "min": 325.56113499973435,
+            "max": 510.4386799997883,
+            "n": 8
+          },
+          "kvcache_latency_ms_stats": {
+            "mean": 423.8187888500397,
+            "std": 51.841522348939215,
+            "min": 334.9123608204536,
+            "max": 517.3325866600499,
+            "n": 8
+          },
+          "baseline_throughput_img_per_s": 72.51531312823317,
+          "kvcache_throughput_img_per_s": 75.50396736026396
+        },
+        "64": {
+          "speedups": [
+            0.9699109465285838,
+            1.0452989752426123,
+            1.055954348073496,
+            1.0429460175464373,
+            1.0522877537395938,
+            1.0398976154000423,
+            1.0555899957279382,
+            0.8426518806278688,
+            1.0737386456582632,
+            1.0525236475058435,
+            1.0409976732426045,
+            1.059467972315242
+          ],
+          "stats": {
+            "mean": 1.027605455967377,
+            "std": 0.06351502395812371,
+            "min": 0.8426518806278688,
+            "max": 1.0737386456582632,
+            "n": 12
+          },
+          "baseline_latency_ms_stats": {
+            "mean": 871.4079754226259,
+            "std": 90.214977943664,
+            "min": 711.6874633403495,
+            "max": 978.3347858197521,
+            "n": 8
+          },
+          "kvcache_latency_ms_stats": {
+            "mean": 823.7642265599425,
+            "std": 51.97378029717069,
+            "min": 764.4889541604789,
+            "max": 928.8508341601118,
+            "n": 8
+          },
+          "baseline_throughput_img_per_s": 73.4443587906807,
+          "kvcache_throughput_img_per_s": 77.69213318143882
+        }
+      },
+      "accuracy_20k": {
+        "num_images": 20000,
+        "images_per_class": 20,
+        "results": {
+          "pytorch_baseline": {
+            "arm": "pytorch_baseline",
+            "top1_acc": 0.85035,
+            "top5_acc": 0.9725,
+            "n": 20000,
+            "compute_time_s": 284.73670411109924
+          },
+          "kvcache_fp16": {
+            "arm": "kvcache_fp16",
+            "top1_acc": 0.8504,
+            "top5_acc": 0.9725,
+            "n": 20000,
+            "compute_time_s": 268.2598600387573
+          }
+        },
+        "top1_prediction_agreement_vs_baseline": 0.9998,
+        "accuracy_difference_top1_pp": 0.004999999999999449,
+        "accuracy_difference_top5_pp": 0.0,
+        "compute_speedup_over_20k_run": 1.0614212058038106
+      }
+    }
+  }
+}

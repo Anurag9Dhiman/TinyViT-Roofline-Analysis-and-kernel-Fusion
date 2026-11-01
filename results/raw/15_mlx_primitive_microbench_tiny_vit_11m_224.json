@@ -1,0 +1,132 @@
+{
+  "phase": "15_mlx_primitive_microbench",
+  "variant": "tiny_vit_11m_224",
+  "methodology_note": "Verifies two claims in README.md/report.md that had no backing results/raw/*.json before this script existed: (1) full-block MLX fusion doesn't pay off because mx.fast.layer_norm and MLX's depthwise conv2d are slower than PyTorch-MPS at these shapes, and (2) an uncompiled MLX call re-traces the op graph and is markedly slower than the mx.compile-wrapped version.",
+  "warmup": 20,
+  "iters": 300,
+  "blocks": [
+    {
+      "stage_idx": 1,
+      "dim": 128,
+      "window_size": 7,
+      "layer_norm": {
+        "input_shape": [
+          16,
+          49,
+          128
+        ],
+        "pytorch_us": 33.06333329722596,
+        "mlx_us": 466.17930667707697,
+        "mlx_vs_pytorch_speedup": 0.0709240689658689,
+        "max_abs_diff": 4.172325134277344e-07
+      },
+      "mlx_attn_compile_benefit": {
+        "input_shape": [
+          16,
+          49,
+          128
+        ],
+        "uncompiled_us": 1195.846943349655,
+        "compiled_us": 1129.1433333341654,
+        "compiled_speedup": 1.059074528491016
+      },
+      "depthwise_conv2d": {
+        "input_shape_bchw": [
+          1,
+          128,
+          28,
+          28
+        ],
+        "pytorch_kernel_only_us": 25.975000025937334,
+        "pytorch_kernel_plus_layout_roundtrip_us": 46.59805665141903,
+        "mlx_us": 368.83791666089866,
+        "mlx_vs_pytorch_kernel_only_speedup": 0.07042388770951162,
+        "mlx_vs_pytorch_kernel_plus_layout_speedup": 0.12633749011834983,
+        "max_abs_diff": 2.86102294921875e-06
+      }
+    },
+    {
+      "stage_idx": 2,
+      "dim": 256,
+      "window_size": 14,
+      "layer_norm": {
+        "input_shape": [
+          1,
+          196,
+          256
+        ],
+        "pytorch_us": 52.85000001701216,
+        "mlx_us": 343.92625001297955,
+        "mlx_vs_pytorch_speedup": 0.1536666654988319,
+        "max_abs_diff": 3.5762786865234375e-07
+      },
+      "mlx_attn_compile_benefit": {
+        "input_shape": [
+          1,
+          196,
+          256
+        ],
+        "uncompiled_us": 568.0184733258405,
+        "compiled_us": 484.7541666822508,
+        "compiled_speedup": 1.1717660463105792
+      },
+      "depthwise_conv2d": {
+        "input_shape_bchw": [
+          1,
+          256,
+          14,
+          14
+        ],
+        "pytorch_kernel_only_us": 22.956666701550905,
+        "pytorch_kernel_plus_layout_roundtrip_us": 26.97958334465511,
+        "mlx_us": 278.2148600090295,
+        "mlx_vs_pytorch_kernel_only_speedup": 0.0825141644152503,
+        "mlx_vs_pytorch_kernel_plus_layout_speedup": 0.09697391197500911,
+        "max_abs_diff": 3.814697265625e-06
+      }
+    },
+    {
+      "stage_idx": 3,
+      "dim": 448,
+      "window_size": 7,
+      "layer_norm": {
+        "input_shape": [
+          1,
+          49,
+          448
+        ],
+        "pytorch_us": 20.932916668243706,
+        "mlx_us": 338.6131933075376,
+        "mlx_vs_pytorch_speedup": 0.06181955423465107,
+        "max_abs_diff": 2.980232238769531e-07
+      },
+      "mlx_attn_compile_benefit": {
+        "input_shape": [
+          1,
+          49,
+          448
+        ],
+        "uncompiled_us": 975.5734699623039,
+        "compiled_us": 1074.9587499594782,
+        "compiled_speedup": 0.9075450290525838
+      },
+      "depthwise_conv2d": {
+        "input_shape_bchw": [
+          1,
+          448,
+          7,
+          7
+        ],
+        "pytorch_kernel_only_us": 29.603056706643354,
+        "pytorch_kernel_plus_layout_roundtrip_us": 39.502636645920575,
+        "mlx_us": 296.9426366810997,
+        "mlx_vs_pytorch_kernel_only_speedup": 0.09969284652926225,
+        "mlx_vs_pytorch_kernel_plus_layout_speedup": 0.13303120457014148,
+        "max_abs_diff": 1.9073486328125e-06
+      }
+    }
+  ],
+  "mean_layer_norm_mlx_slowdown_x": 12.261096522047152,
+  "mean_conv2d_mlx_slowdown_x_kernel_only": 12.116556219155855,
+  "mean_mlx_compile_speedup_x": 1.0461285346180598
+}

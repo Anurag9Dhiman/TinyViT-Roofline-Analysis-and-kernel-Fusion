@@ -1,0 +1,132 @@
+{
+  "phase": "15_mlx_primitive_microbench",
+  "variant": "tiny_vit_21m_224",
+  "methodology_note": "Verifies two claims in README.md/report.md that had no backing results/raw/*.json before this script existed: (1) full-block MLX fusion doesn't pay off because mx.fast.layer_norm and MLX's depthwise conv2d are slower than PyTorch-MPS at these shapes, and (2) an uncompiled MLX call re-traces the op graph and is markedly slower than the mx.compile-wrapped version.",
+  "warmup": 20,
+  "iters": 300,
+  "blocks": [
+    {
+      "stage_idx": 1,
+      "dim": 192,
+      "window_size": 7,
+      "layer_norm": {
+        "input_shape": [
+          16,
+          49,
+          192
+        ],
+        "pytorch_us": 18.66819332159745,
+        "mlx_us": 286.0036133400475,
+        "mlx_vs_pytorch_speedup": 0.06527257856494867,
+        "max_abs_diff": 4.917383193969727e-07
+      },
+      "mlx_attn_compile_benefit": {
+        "input_shape": [
+          16,
+          49,
+          192
+        ],
+        "uncompiled_us": 1141.7669433285482,
+        "compiled_us": 598.9305533391113,
+        "compiled_speedup": 1.9063427921034544
+      },
+      "depthwise_conv2d": {
+        "input_shape_bchw": [
+          1,
+          192,
+          28,
+          28
+        ],
+        "pytorch_kernel_only_us": 22.400276648113504,
+        "pytorch_kernel_plus_layout_roundtrip_us": 47.252916653330125,
+        "mlx_us": 388.69361000251956,
+        "mlx_vs_pytorch_kernel_only_speedup": 0.05762964986218401,
+        "mlx_vs_pytorch_kernel_plus_layout_speedup": 0.12156854508882672,
+        "max_abs_diff": 3.814697265625e-06
+      }
+    },
+    {
+      "stage_idx": 2,
+      "dim": 384,
+      "window_size": 14,
+      "layer_norm": {
+        "input_shape": [
+          1,
+          196,
+          384
+        ],
+        "pytorch_us": 32.713749969843775,
+        "mlx_us": 406.7383333555578,
+        "mlx_vs_pytorch_speedup": 0.08042947341588885,
+        "max_abs_diff": 3.557652235031128e-07
+      },
+      "mlx_attn_compile_benefit": {
+        "input_shape": [
+          1,
+          196,
+          384
+        ],
+        "uncompiled_us": 1899.5686100000362,
+        "compiled_us": 1962.7055566525087,
+        "compiled_speedup": 0.967831676820564
+      },
+      "depthwise_conv2d": {
+        "input_shape_bchw": [
+          1,
+          384,
+          14,
+          14
+        ],
+        "pytorch_kernel_only_us": 23.56583335010024,
+        "pytorch_kernel_plus_layout_roundtrip_us": 31.931666647627328,
+        "mlx_us": 270.7095833223624,
+        "mlx_vs_pytorch_kernel_only_speedup": 0.0870520838637542,
+        "mlx_vs_pytorch_kernel_plus_layout_speedup": 0.11795543495629757,
+        "max_abs_diff": 3.814697265625e-06
+      }
+    },
+    {
+      "stage_idx": 3,
+      "dim": 576,
+      "window_size": 7,
+      "layer_norm": {
+        "input_shape": [
+          1,
+          49,
+          576
+        ],
+        "pytorch_us": 21.224306644095726,
+        "mlx_us": 265.0690266455058,
+        "mlx_vs_pytorch_speedup": 0.08007086649350544,
+        "max_abs_diff": 3.5762786865234375e-07
+      },
+      "mlx_attn_compile_benefit": {
+        "input_shape": [
+          1,
+          49,
+          576
+        ],
+        "uncompiled_us": 651.6863866515147,
+        "compiled_us": 452.35653000418097,
+        "compiled_speedup": 1.4406476825823458
+      },
+      "depthwise_conv2d": {
+        "input_shape_bchw": [
+          1,
+          576,
+          7,
+          7
+        ],
+        "pytorch_kernel_only_us": 21.497359994100407,
+        "pytorch_kernel_plus_layout_roundtrip_us": 26.527916634222493,
+        "mlx_us": 248.52652665382874,
+        "mlx_vs_pytorch_kernel_only_speedup": 0.0864992573772375,
+        "mlx_vs_pytorch_kernel_plus_layout_speedup": 0.10674078534551398,
+        "max_abs_diff": 6.103515625e-05
+      }
+    }
+  ],
+  "mean_layer_norm_mlx_slowdown_x": 13.414186393306052,
+  "mean_conv2d_mlx_slowdown_x_kernel_only": 13.46678255810206,
+  "mean_mlx_compile_speedup_x": 1.4382740505021214
+}

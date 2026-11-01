@@ -1,0 +1,83 @@
+{
+  "phase": "14_fp16_benchmark",
+  "variant": "tiny_vit_21m_224",
+  "methodology_note": "Each (arm, batch_size) pair runs in its own subprocess with a cooldown pause (Phases 7/11/12's fix for thermal/allocator confounds). fp16 is NOT numerically exact like the other optimizations in this project -- see module docstring; correctness here is reported but a real accuracy validation (Phase 7-style, on ImageNet) is the more meaningful check for a lossy optimization.",
+  "batch_sizes": [
+    1,
+    4,
+    16,
+    32
+  ],
+  "correctness": {
+    "best": {
+      "max_abs_diff": 1.4901161193847656e-06,
+      "top1_match": true,
+      "at_batch_size": 1
+    },
+    "best_fp16": {
+      "max_abs_diff": 0.0049797892570495605,
+      "top1_match": true,
+      "at_batch_size": 1
+    }
+  },
+  "results": {
+    "baseline": [
+      {
+        "batch_size": 1,
+        "ms": 8.951322499779053
+      },
+      {
+        "batch_size": 4,
+        "ms": 32.25778918014839
+      },
+      {
+        "batch_size": 16,
+        "ms": 122.63571834017057
+      },
+      {
+        "batch_size": 32,
+        "ms": 244.93788083957043
+      }
+    ],
+    "best": [
+      {
+        "batch_size": 1,
+        "ms": 7.93685499986168
+      },
+      {
+        "batch_size": 4,
+        "ms": 27.750688320375048
+      },
+      {
+        "batch_size": 16,
+        "ms": 106.58949331962503
+      },
+      {
+        "batch_size": 32,
+        "ms": 211.7433875001734
+      }
+    ],
+    "best_fp16": [
+      {
+        "batch_size": 1,
+        "ms": 7.183641680167057
+      },
+      {
+        "batch_size": 4,
+        "ms": 23.674098339979537
+      },
+      {
+        "batch_size": 16,
+        "ms": 89.36478915973566
+      },
+      {
+        "batch_size": 32,
+        "ms": 176.90286250028294
+      }
+    ]
+  },
+  "mean_speedup": {
+    "best": 1.149385292201935,
+    "best_fp16": 1.3413854946036587
+  }
+}

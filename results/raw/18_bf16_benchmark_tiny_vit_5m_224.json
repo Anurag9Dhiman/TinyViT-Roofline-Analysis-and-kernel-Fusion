@@ -1,0 +1,107 @@
+{
+  "phase": "18_bf16_benchmark",
+  "variant": "tiny_vit_5m_224",
+  "methodology_note": "Each (arm, batch_size) pair runs in its own subprocess with a cooldown pause (same fix as Phase 14). bf16 and fp16 are both NOT numerically exact like the other optimizations in this project; correctness here is an isolated-tensor check, not a full ImageNet accuracy validation.",
+  "batch_sizes": [
+    1,
+    4,
+    16,
+    32
+  ],
+  "correctness": {
+    "best": {
+      "max_abs_diff": 2.682209014892578e-06,
+      "top1_match": true,
+      "at_batch_size": 1
+    },
+    "best_fp16": {
+      "max_abs_diff": 0.011755596846342087,
+      "top1_match": true,
+      "at_batch_size": 1
+    },
+    "best_bf16": {
+      "max_abs_diff": 0.1150960922241211,
+      "top1_match": true,
+      "at_batch_size": 1
+    }
+  },
+  "results": {
+    "baseline": [
+      {
+        "batch_size": 1,
+        "ms": 4.594737499719486
+      },
+      {
+        "batch_size": 4,
+        "ms": 14.837541660526767
+      },
+      {
+        "batch_size": 16,
+        "ms": 55.71900915936567
+      },
+      {
+        "batch_size": 32,
+        "ms": 110.33427500049584
+      }
+    ],
+    "best": [
+      {
+        "batch_size": 1,
+        "ms": 3.5491641599219292
+      },
+      {
+        "batch_size": 4,
+        "ms": 12.26077667903155
+      },
+      {
+        "batch_size": 16,
+        "ms": 46.07259834068827
+      },
+      {
+        "batch_size": 32,
+        "ms": 91.5940641798079
+      }
+    ],
+    "best_fp16": [
+      {
+        "batch_size": 1,
+        "ms": 3.2520650001242757
+      },
+      {
+        "batch_size": 4,
+        "ms": 9.995356659637764
+      },
+      {
+        "batch_size": 16,
+        "ms": 37.27125665987842
+      },
+      {
+        "batch_size": 32,
+        "ms": 73.31815165933222
+      }
+    ],
+    "best_bf16": [
+      {
+        "batch_size": 1,
+        "ms": 3.304754999699071
+      },
+      {
+        "batch_size": 4,
+        "ms": 10.047959160292521
+      },
+      {
+        "batch_size": 16,
+        "ms": 37.26850499981083
+      },
+      {
+        "batch_size": 32,
+        "ms": 73.35518750012852
+      }
+    ]
+  },
+  "mean_speedup": {
+    "best": 1.229683798756255,
+    "best_fp16": 1.4742850454213303,
+    "best_bf16": 1.4665482933464467
+  }
+}

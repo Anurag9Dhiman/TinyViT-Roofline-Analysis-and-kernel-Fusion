@@ -1,0 +1,865 @@
+{
+  "phase": "13_optimized_profile",
+  "variant": "tiny_vit_21m_224",
+  "batch_size": 1,
+  "device": "mps",
+  "dtype": "float32",
+  "optimization": "conv_bn_fused + channels_last",
+  "latency": {
+    "mean_ms": 8.542170859291218,
+    "std_ms": 0.16451033735064946,
+    "min_ms": 8.306542003992945,
+    "max_ms": 9.482124994974583,
+    "p50_ms": 8.53474999894388,
+    "p90_ms": 8.609084005001932,
+    "n": 50
+  },
+  "peak_memory_mb": 104.3251953125,
+  "op_breakdown_uninstrumented": {
+    "total_op_calls_per_iter": 901.0,
+    "by_category": {
+      "linear_qkv_proj_or_mlp": {
+        "self_cpu_time_us_per_iter": 1188.3068499999972,
+        "calls_per_iter": 41.0,
+        "ops": [
+          "aten::linear"
+        ]
+      },
+      "conv": {
+        "self_cpu_time_us_per_iter": 1223.245800000011,
+        "calls_per_iter": 81.0,
+        "ops": [
+          "aten::_convolution",
+          "aten::_mps_convolution",
+          "aten::convolution"
+        ]
+      },
+      "attn_core_qk_softmax_av": {
+        "self_cpu_time_us_per_iter": 885.5773000000015,
+        "calls_per_iter": 20.0,
+        "ops": [
+          "aten::_scaled_dot_product_attention_math_for_mps",
+          "aten::scaled_dot_product_attention"
+        ]
+      },
+      "activation": {
+        "self_cpu_time_us_per_iter": 764.5445500000005,
+        "calls_per_iter": 23.0,
+        "ops": [
+          "aten::gelu"
+        ]
+      },
+      "head": {
+        "self_cpu_time_us_per_iter": 112.7550000000017,
+        "calls_per_iter": 3.0,
+        "ops": [
+          "aten::adaptive_avg_pool2d",
+          "aten::flatten",
+          "aten::mean"
+        ]
+      },
+      "norm": {
+        "self_cpu_time_us_per_iter": 84.73545000000726,
+        "calls_per_iter": 42.0,
+        "ops": [
+          "aten::layer_norm",
+          "aten::native_layer_norm"
+        ]
+      },
+      "alloc": {
+        "self_cpu_time_us_per_iter": 64.42409999999504,
+        "calls_per_iter": 200.0,
+        "ops": [
+          "aten::empty",
+          "aten::empty_like"
+        ]
+      },
+      "elementwise": {
+        "self_cpu_time_us_per_iter": 43.28940000000142,
+        "calls_per_iter": 43.0,
+        "ops": [
+          "aten::add",
+          "aten::add_",
+          "aten::dropout"
+        ]
+      },
+      "layout": {
+        "self_cpu_time_us_per_iter": 187.23454999998728,
+        "calls_per_iter": 421.0,
+        "ops": [
+          "aten::_reshape_alias",
+          "aten::_unsafe_view",
+          "aten::as_strided",
+          "aten::as_strided_",
+          "aten::clone",
+          "aten::copy_",
+          "aten::expand",
+          "aten::permute",
+          "aten::reshape",
+          "aten::split_with_sizes",
+          "aten::transpose",
+          "aten::view"
+        ]
+      },
+      "other": {
+        "self_cpu_time_us_per_iter": 21.157799999994086,
+        "calls_per_iter": 27.0,
+        "ops": [
+          "aten::conv2d"
+        ]
+      }
+    },
+    "top_ops": [
+      {
+        "name": "aten::linear",
+        "count": 820,
+        "self_cpu_time_us": 23766.136999999944,
+        "cpu_time_total_us": 24036.667999999965,
+        "self_cpu_time_avg_us": 28.983093902438956
+      },
+      {
+        "name": "aten::_mps_convolution",
+        "count": 540,
+        "self_cpu_time_us": 23448.257000000052,
+        "cpu_time_total_us": 23766.097999999918,
+        "self_cpu_time_avg_us": 43.42269814814824
+      },
+      {
+        "name": "aten::_scaled_dot_product_attention_math_for_mps",
+        "count": 200,
+        "self_cpu_time_us": 17556.544000000038,
+        "cpu_time_total_us": 17787.875,
+        "self_cpu_time_avg_us": 87.7827200000002
+      },
+      {
+        "name": "aten::gelu",
+        "count": 460,
+        "self_cpu_time_us": 15290.89100000001,
+        "cpu_time_total_us": 15290.89100000001,
+        "self_cpu_time_avg_us": 33.24106739130437
+      },
+      {
+        "name": "aten::mean",
+        "count": 20,
+        "self_cpu_time_us": 2199.102000000037,
+        "cpu_time_total_us": 2203.9340000000348,
+        "self_cpu_time_avg_us": 109.95510000000186
+      },
+      {
+        "name": "aten::native_layer_norm",
+        "count": 420,
+        "self_cpu_time_us": 1415.1490000000267,
+        "cpu_time_total_us": 2079.40499999993,
+        "self_cpu_time_avg_us": 3.3694023809524447
+      },
+      {
+        "name": "aten::empty",
+        "count": 3300,
+        "self_cpu_time_us": 1060.7580000000078,
+        "cpu_time_total_us": 1060.7580000000078,
+        "self_cpu_time_avg_us": 0.32144181818182055
+      },
+      {
+        "name": "aten::add",
+        "count": 400,
+        "self_cpu_time_us": 621.3230000000799,
+        "cpu_time_total_us": 621.3230000000799,
+        "self_cpu_time_avg_us": 1.5533075000001997
+      },
+      {
+        "name": "aten::_convolution",
+        "count": 540,
+        "self_cpu_time_us": 601.1590000000892,
+        "cpu_time_total_us": 24367.25700000001,
+        "self_cpu_time_avg_us": 1.1132574074075727
+      },
+      {
+        "name": "aten::view",
+        "count": 2640,
+        "self_cpu_time_us": 598.9739999998322,
+        "cpu_time_total_us": 598.9739999998322,
+        "self_cpu_time_avg_us": 0.22688409090902736
+      },
+      {
+        "name": "aten::permute",
+        "count": 960,
+        "self_cpu_time_us": 557.1299999998325,
+        "cpu_time_total_us": 744.2919999999613,
+        "self_cpu_time_avg_us": 0.5803437499998255
+      },
+      {
+        "name": "aten::as_strided",
+        "count": 2240,
+        "self_cpu_time_us": 521.4020000001266,
+        "cpu_time_total_us": 521.4020000001266,
+        "self_cpu_time_avg_us": 0.2327687500000565
+      },
+      {
+        "name": "aten::reshape",
+        "count": 640,
+        "self_cpu_time_us": 496.549999999929,
+        "cpu_time_total_us": 1520.5019999999358,
+        "self_cpu_time_avg_us": 0.7758593749998891
+      },
+      {
+        "name": "aten::copy_",
+        "count": 280,
+        "self_cpu_time_us": 453.36400000000674,
+        "cpu_time_total_us": 453.36400000000674,
+        "self_cpu_time_avg_us": 1.619157142857167
+      },
+      {
+        "name": "aten::conv2d",
+        "count": 540,
+        "self_cpu_time_us": 423.1559999998817,
+        "cpu_time_total_us": 25205.912999999964,
+        "self_cpu_time_avg_us": 0.7836222222220032
+      },
+      {
+        "name": "aten::convolution",
+        "count": 540,
+        "self_cpu_time_us": 415.50000000007486,
+        "cpu_time_total_us": 24782.757000000085,
+        "self_cpu_time_avg_us": 0.769444444444583
+      },
+      {
+        "name": "aten::transpose",
+        "count": 480,
+        "self_cpu_time_us": 351.8350000000604,
+        "cpu_time_total_us": 504.38200000005224,
+        "self_cpu_time_avg_us": 0.7329895833334592
+      },
+      {
+        "name": "aten::split_with_sizes",
+        "count": 200,
+        "self_cpu_time_us": 326.1309999998931,
+        "cpu_time_total_us": 465.7439999999749,
+        "self_cpu_time_avg_us": 1.6306549999994655
+      },
+      {
+        "name": "aten::layer_norm",
+        "count": 420,
+        "self_cpu_time_us": 279.5600000001184,
+        "cpu_time_total_us": 2358.9650000000483,
+        "self_cpu_time_avg_us": 0.6656190476193296
+      },
+      {
+        "name": "aten::empty_like",
+        "count": 700,
+        "self_cpu_time_us": 227.72399999989307,
+        "cpu_time_total_us": 464.7939999998862,
+        "self_cpu_time_avg_us": 0.32531999999984723
+      }
+    ]
+  },
+  "op_breakdown_instrumented_fine_grained": [
+    {
+      "name": "tinyvit/s1b1/block/mlp",
+      "self_cpu_time_us_per_iter": 40.042899999995754,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b0/block/mlp",
+      "self_cpu_time_us_per_iter": 38.75799999999915,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b0/block/mlp",
+      "self_cpu_time_us_per_iter": 27.989149999999153,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b0/block/mlp",
+      "self_cpu_time_us_per_iter": 26.937050000003318,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b3/block/mlp",
+      "self_cpu_time_us_per_iter": 26.430950000001168,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b5/block/mlp",
+      "self_cpu_time_us_per_iter": 25.912150000004612,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b1/block/mlp",
+      "self_cpu_time_us_per_iter": 25.664650000002165,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b2/block/mlp",
+      "self_cpu_time_us_per_iter": 25.426650000000315,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b1/block/mlp",
+      "self_cpu_time_us_per_iter": 24.99969999999871,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b4/block/mlp",
+      "self_cpu_time_us_per_iter": 24.813799999998537,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b1/block/local_conv",
+      "self_cpu_time_us_per_iter": 15.918400000000066,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b0/block/window_partition",
+      "self_cpu_time_us_per_iter": 14.218900000000229,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b0/block/reshape_full_window",
+      "self_cpu_time_us_per_iter": 13.750050000002238,
+      "calls_per_iter": 2.0
+    },
+    {
+      "name": "tinyvit/s2b2/block/local_conv",
+      "self_cpu_time_us_per_iter": 13.312149999999042,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b1/attn/split_permute",
+      "self_cpu_time_us_per_iter": 12.972600000001194,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b1/attn/qkv_proj",
+      "self_cpu_time_us_per_iter": 12.722750000000179,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b5/block/local_conv",
+      "self_cpu_time_us_per_iter": 12.0391500000002,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b0/block/reshape_full_window",
+      "self_cpu_time_us_per_iter": 11.960200000000508,
+      "calls_per_iter": 2.0
+    },
+    {
+      "name": "tinyvit/s2b2/block/reshape_full_window",
+      "self_cpu_time_us_per_iter": 11.941300000000888,
+      "calls_per_iter": 2.0
+    },
+    {
+      "name": "tinyvit/s3b0/block/local_conv",
+      "self_cpu_time_us_per_iter": 11.825249999997913,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b1/attn/split_permute",
+      "self_cpu_time_us_per_iter": 11.779150000001163,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b3/block/local_conv",
+      "self_cpu_time_us_per_iter": 11.739450000000351,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b4/block/reshape_full_window",
+      "self_cpu_time_us_per_iter": 11.720399999999154,
+      "calls_per_iter": 2.0
+    },
+    {
+      "name": "tinyvit/s1b1/attn/out_proj",
+      "self_cpu_time_us_per_iter": 11.378899999999215,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b0/block/local_conv",
+      "self_cpu_time_us_per_iter": 11.330849999997849,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b0/block/local_conv",
+      "self_cpu_time_us_per_iter": 11.31844999999986,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b0/attn/split_permute",
+      "self_cpu_time_us_per_iter": 11.176899999999762,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b4/block/local_conv",
+      "self_cpu_time_us_per_iter": 10.945850000000338,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b1/block/local_conv",
+      "self_cpu_time_us_per_iter": 10.86220000000019,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b1/block/local_conv",
+      "self_cpu_time_us_per_iter": 10.851750000000493,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b0/attn/merge_heads",
+      "self_cpu_time_us_per_iter": 10.843849999999748,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b1/block/window_reverse",
+      "self_cpu_time_us_per_iter": 10.83919999999937,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b3/block/reshape_full_window",
+      "self_cpu_time_us_per_iter": 10.726800000000548,
+      "calls_per_iter": 2.0
+    },
+    {
+      "name": "tinyvit/s1b1/block/residual_add_1",
+      "self_cpu_time_us_per_iter": 10.60819999999901,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b5/block/reshape_full_window",
+      "self_cpu_time_us_per_iter": 10.506349999999339,
+      "calls_per_iter": 2.0
+    },
+    {
+      "name": "tinyvit/s2b0/attn/split_permute",
+      "self_cpu_time_us_per_iter": 10.314400000000386,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b5/attn/split_permute",
+      "self_cpu_time_us_per_iter": 10.097650000000659,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b1/block/reshape_full_window",
+      "self_cpu_time_us_per_iter": 10.004249999998546,
+      "calls_per_iter": 2.0
+    },
+    {
+      "name": "tinyvit/s2b1/block/reshape_full_window",
+      "self_cpu_time_us_per_iter": 9.83114999999923,
+      "calls_per_iter": 2.0
+    },
+    {
+      "name": "tinyvit/s2b5/attn/qkv_proj",
+      "self_cpu_time_us_per_iter": 9.737649999996574,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b0/attn/split_permute",
+      "self_cpu_time_us_per_iter": 9.674549999997271,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b1/block/window_partition",
+      "self_cpu_time_us_per_iter": 9.653850000000784,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b1/attn/split_permute",
+      "self_cpu_time_us_per_iter": 9.220450000000824,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b0/attn/norm",
+      "self_cpu_time_us_per_iter": 9.21870000000003,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b2/attn/split_permute",
+      "self_cpu_time_us_per_iter": 9.183600000001865,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b1/attn/norm",
+      "self_cpu_time_us_per_iter": 9.158049999999502,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b4/attn/split_permute",
+      "self_cpu_time_us_per_iter": 9.04600000000005,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b3/attn/split_permute",
+      "self_cpu_time_us_per_iter": 8.877150000003098,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b0/attn/out_proj",
+      "self_cpu_time_us_per_iter": 8.480950000001258,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b1/attn/qkv_proj",
+      "self_cpu_time_us_per_iter": 8.07694999999842,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b0/attn/norm",
+      "self_cpu_time_us_per_iter": 7.97694999999967,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b5/attn/out_proj",
+      "self_cpu_time_us_per_iter": 7.922799999999779,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b0/attn/norm",
+      "self_cpu_time_us_per_iter": 7.839650000001393,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b4/attn/out_proj",
+      "self_cpu_time_us_per_iter": 7.695800000000372,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b2/attn/out_proj",
+      "self_cpu_time_us_per_iter": 7.685549999997761,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b0/attn/qkv_proj",
+      "self_cpu_time_us_per_iter": 7.628899999998384,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b0/attn/out_proj",
+      "self_cpu_time_us_per_iter": 7.628800000000865,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b2/attn/norm",
+      "self_cpu_time_us_per_iter": 7.528949999999327,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b1/attn/bias_gather",
+      "self_cpu_time_us_per_iter": 7.524949999999899,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b3/attn/out_proj",
+      "self_cpu_time_us_per_iter": 7.503949999998054,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b0/block/window_reverse",
+      "self_cpu_time_us_per_iter": 7.4227499999982225,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b1/attn/out_proj",
+      "self_cpu_time_us_per_iter": 7.370600000000058,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b0/attn/out_proj",
+      "self_cpu_time_us_per_iter": 7.362299999999754,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b4/attn/norm",
+      "self_cpu_time_us_per_iter": 7.310449999999309,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b4/attn/qkv_proj",
+      "self_cpu_time_us_per_iter": 7.310350000000199,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b0/block/residual_add_1",
+      "self_cpu_time_us_per_iter": 7.303949999999429,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b1/attn/out_proj",
+      "self_cpu_time_us_per_iter": 7.293749999998704,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b5/attn/norm",
+      "self_cpu_time_us_per_iter": 7.2914499999995765,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b0/attn/sdpa_qk_softmax_av",
+      "self_cpu_time_us_per_iter": 7.276899999999659,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b5/attn/sdpa_qk_softmax_av",
+      "self_cpu_time_us_per_iter": 7.2000499999976,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b3/attn/norm",
+      "self_cpu_time_us_per_iter": 7.110200000000009,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b0/attn/qkv_proj",
+      "self_cpu_time_us_per_iter": 7.058299999999235,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b1/attn/norm",
+      "self_cpu_time_us_per_iter": 7.045549999998457,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b0/attn/qkv_proj",
+      "self_cpu_time_us_per_iter": 6.978950000000213,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b0/block/residual_add_1",
+      "self_cpu_time_us_per_iter": 6.887499999998863,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b1/attn/norm",
+      "self_cpu_time_us_per_iter": 6.874950000000672,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b2/attn/qkv_proj",
+      "self_cpu_time_us_per_iter": 6.849950000001172,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b1/attn/sdpa_qk_softmax_av",
+      "self_cpu_time_us_per_iter": 6.83745000000066,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b1/attn/merge_heads",
+      "self_cpu_time_us_per_iter": 6.818800000000238,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b1/attn/qkv_proj",
+      "self_cpu_time_us_per_iter": 6.812250000000927,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b0/attn/bias_gather",
+      "self_cpu_time_us_per_iter": 6.739450000000232,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b0/attn/sdpa_qk_softmax_av",
+      "self_cpu_time_us_per_iter": 6.724899999998797,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b5/block/residual_add_1",
+      "self_cpu_time_us_per_iter": 6.645749999999043,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b1/block/residual_add_1",
+      "self_cpu_time_us_per_iter": 6.637449999998944,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b5/attn/merge_heads",
+      "self_cpu_time_us_per_iter": 6.610450000000673,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b1/attn/sdpa_qk_softmax_av",
+      "self_cpu_time_us_per_iter": 6.564550000000463,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b1/attn/sdpa_qk_softmax_av",
+      "self_cpu_time_us_per_iter": 6.537249999999085,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b3/attn/qkv_proj",
+      "self_cpu_time_us_per_iter": 6.5228000000023485,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b0/attn/merge_heads",
+      "self_cpu_time_us_per_iter": 6.503949999999532,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b3/attn/sdpa_qk_softmax_av",
+      "self_cpu_time_us_per_iter": 6.447650000000135,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b0/attn/sdpa_qk_softmax_av",
+      "self_cpu_time_us_per_iter": 6.443649999999525,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b4/block/residual_add_1",
+      "self_cpu_time_us_per_iter": 6.433199999999124,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s1b1/attn/merge_heads",
+      "self_cpu_time_us_per_iter": 6.420849999999336,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b0/block/residual_add_1",
+      "self_cpu_time_us_per_iter": 6.381200000000194,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b2/block/residual_add_1",
+      "self_cpu_time_us_per_iter": 6.339550000000076,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b3/block/residual_add_1",
+      "self_cpu_time_us_per_iter": 6.2893500000008995,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b4/attn/sdpa_qk_softmax_av",
+      "self_cpu_time_us_per_iter": 6.197650000000204,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b1/block/residual_add_1",
+      "self_cpu_time_us_per_iter": 6.18970000000113,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b1/attn/merge_heads",
+      "self_cpu_time_us_per_iter": 6.164399999999455,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b4/attn/merge_heads",
+      "self_cpu_time_us_per_iter": 6.11449999999827,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b0/attn/bias_gather",
+      "self_cpu_time_us_per_iter": 6.072799999999961,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b0/attn/merge_heads",
+      "self_cpu_time_us_per_iter": 6.016800000000989,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b0/attn/bias_gather",
+      "self_cpu_time_us_per_iter": 6.0081499999999775,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b3/attn/merge_heads",
+      "self_cpu_time_us_per_iter": 5.995699999998942,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b2/attn/sdpa_qk_softmax_av",
+      "self_cpu_time_us_per_iter": 5.9835000000003,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b2/attn/merge_heads",
+      "self_cpu_time_us_per_iter": 5.866799999998238,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b4/attn/bias_gather",
+      "self_cpu_time_us_per_iter": 5.645650000000205,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b2/attn/bias_gather",
+      "self_cpu_time_us_per_iter": 5.1271499999991645,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s3b1/attn/bias_gather",
+      "self_cpu_time_us_per_iter": 5.079200000000128,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b1/attn/bias_gather",
+      "self_cpu_time_us_per_iter": 5.029049999999529,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b5/attn/bias_gather",
+      "self_cpu_time_us_per_iter": 5.008350000000064,
+      "calls_per_iter": 1.0
+    },
+    {
+      "name": "tinyvit/s2b3/attn/bias_gather",
+      "self_cpu_time_us_per_iter": 4.943749999999886,
+      "calls_per_iter": 1.0
+    }
+  ],
+  "chrome_trace_path": "/Users/anuragdhiman/Documents/tinyViT/results/traces/13_optimized_tiny_vit_21m_224_bs1.json",
+  "comparison_vs_baseline": {
+    "baseline_mean_ms": 9.573617381975055,
+    "optimized_mean_ms": 8.542170859291218,
+    "end_to_end_speedup": 1.1207475874311206,
+    "by_category": {
+      "conv": {
+        "baseline_us_per_iter": 3547.0883000000067,
+        "optimized_us_per_iter": 1223.245800000011
+      },
+      "linear_qkv_proj_or_mlp": {
+        "baseline_us_per_iter": 1213.4039999999873,
+        "optimized_us_per_iter": 1188.3068499999972
+      },
+      "attn_core_qk_softmax_av": {
+        "baseline_us_per_iter": 850.9004999999988,
+        "optimized_us_per_iter": 885.5773000000015
+      },
+      "activation": {
+        "baseline_us_per_iter": 338.8990500000056,
+        "optimized_us_per_iter": 764.5445500000005
+      },
+      "layout": {
+        "baseline_us_per_iter": 216.95189999999963,
+        "optimized_us_per_iter": 187.23454999998728
+      },
+      "alloc": {
+        "baseline_us_per_iter": 104.63024999999857,
+        "optimized_us_per_iter": 64.42409999999504
+      },
+      "norm": {
+        "baseline_us_per_iter": 78.40465000000702,
+        "optimized_us_per_iter": 84.73545000000726
+      },
+      "elementwise": {
+        "baseline_us_per_iter": 45.45555000000469,
+        "optimized_us_per_iter": 43.28940000000142
+      },
+      "head": {
+        "baseline_us_per_iter": 24.591400000002704,
+        "optimized_us_per_iter": 112.7550000000017
+      },
+      "other": {
+        "baseline_us_per_iter": 20.928499999989985,
+        "optimized_us_per_iter": 21.157799999994086
+      }
+    }
+  }
+}

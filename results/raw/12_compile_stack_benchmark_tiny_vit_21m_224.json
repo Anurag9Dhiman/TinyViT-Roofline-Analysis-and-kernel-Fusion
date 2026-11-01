@@ -1,0 +1,84 @@
+{
+  "phase": "12_compile_stack_benchmark",
+  "variant": "tiny_vit_21m_224",
+  "methodology_note": "Each (arm, batch_size) pair runs in its own subprocess with a cooldown pause (Phases 7/11's fix for thermal/allocator confounds) -- and, specifically for torch.compile, because reusing one compiled model across batch sizes crashes PyTorch's MPS Inductor codegen on dynamic shapes (see module docstring).",
+  "batch_sizes": [
+    1,
+    4,
+    16,
+    32
+  ],
+  "correctness": {
+    "best": {
+      "max_abs_diff": 1.4901161193847656e-06,
+      "top1_match": true,
+      "at_batch_size": 1
+    },
+    "best_compiled": {
+      "max_abs_diff": 1.9073486328125e-06,
+      "top1_match": true,
+      "at_batch_size": 1
+    }
+  },
+  "results": {
+    "baseline": [
+      {
+        "batch_size": 1,
+        "ms": 8.916760839929339
+      },
+      {
+        "batch_size": 4,
+        "ms": 32.23433999984991
+      },
+      {
+        "batch_size": 16,
+        "ms": 122.67697916016914
+      },
+      {
+        "batch_size": 32,
+        "ms": 243.62881331995595
+      }
+    ],
+    "best": [
+      {
+        "batch_size": 1,
+        "ms": 8.00268084014533
+      },
+      {
+        "batch_size": 4,
+        "ms": 27.97028250002768
+      },
+      {
+        "batch_size": 16,
+        "ms": 107.2918241599109
+      },
+      {
+        "batch_size": 32,
+        "ms": 212.67911584000103
+      }
+    ],
+    "best_compiled": [
+      {
+        "batch_size": 1,
+        "ms": 13.628181660023984
+      },
+      {
+        "batch_size": 4,
+        "ms": 67.9760183399776
+      },
+      {
+        "batch_size": 16,
+        "ms": 266.2897916600923
+      },
+      {
+        "batch_size": 32,
+        "ms": 532.8208766601165
+      }
+    ]
+  },
+  "errors": {},
+  "mean_speedup": {
+    "best": 1.138897418840679,
+    "best_compiled": 0.5116057877211191
+  }
+}

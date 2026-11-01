@@ -1,0 +1,104 @@
+{
+  "phase": "11_channels_last_benchmark",
+  "variant": "tiny_vit_11m_224",
+  "methodology_note": "Each arm evaluated in a separate subprocess with a cooldown pause between them (same fix as scripts/07_accuracy_eval.py), after an in-process version gave a thermally-confounded result for TinyViT-21M at batch=32 -- see this script's module docstring.",
+  "batch_sizes": [
+    1,
+    4,
+    16,
+    32
+  ],
+  "correctness": {
+    "channels_last": {
+      "max_abs_diff": 1.9669532775878906e-06,
+      "top1_match": true
+    },
+    "conv_bn_fused": {
+      "max_abs_diff": 2.384185791015625e-06,
+      "top1_match": true
+    },
+    "conv_bn_fused_channels_last": {
+      "max_abs_diff": 3.0994415283203125e-06,
+      "top1_match": true
+    }
+  },
+  "results": {
+    "baseline": [
+      {
+        "batch_size": 1,
+        "ms": 5.3341916599310935
+      },
+      {
+        "batch_size": 4,
+        "ms": 19.086405000125524
+      },
+      {
+        "batch_size": 16,
+        "ms": 72.33018665981945
+      },
+      {
+        "batch_size": 32,
+        "ms": 141.34684749995358
+      }
+    ],
+    "channels_last": [
+      {
+        "batch_size": 1,
+        "ms": 5.0527466597850434
+      },
+      {
+        "batch_size": 4,
+        "ms": 17.846867500047665
+      },
+      {
+        "batch_size": 16,
+        "ms": 68.26065166009357
+      },
+      {
+        "batch_size": 32,
+        "ms": 135.39608667982975
+      }
+    ],
+    "conv_bn_fused": [
+      {
+        "batch_size": 1,
+        "ms": 4.8712725000223145
+      },
+      {
+        "batch_size": 4,
+        "ms": 16.998075839946978
+      },
+      {
+        "batch_size": 16,
+        "ms": 63.824768339982256
+      },
+      {
+        "batch_size": 32,
+        "ms": 125.93692666006973
+      }
+    ],
+    "conv_bn_fused_channels_last": [
+      {
+        "batch_size": 1,
+        "ms": 4.62413834000472
+      },
+      {
+        "batch_size": 4,
+        "ms": 16.122784159961157
+      },
+      {
+        "batch_size": 16,
+        "ms": 60.96989250014303
+      },
+      {
+        "batch_size": 32,
+        "ms": 120.68102499993984
+      }
+    ]
+  },
+  "mean_speedup": {
+    "channels_last": 1.0571809485561208,
+    "conv_bn_fused": 1.1183778697286801,
+    "conv_bn_fused_channels_last": 1.173734747376011
+  }
+}

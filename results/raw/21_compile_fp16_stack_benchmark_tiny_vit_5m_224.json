@@ -1,0 +1,84 @@
+{
+  "phase": "21_compile_fp16_stack_benchmark",
+  "variant": "tiny_vit_5m_224",
+  "methodology_note": "Each (arm, batch_size) pair runs in its own subprocess with a cooldown pause -- same fix as Phase 12, including for the same torch.compile dynamic-shape MPS crash.",
+  "batch_sizes": [
+    1,
+    4,
+    16,
+    32
+  ],
+  "correctness": {
+    "best_fp16": {
+      "max_abs_diff": 0.011755596846342087,
+      "top1_match": true,
+      "at_batch_size": 1
+    },
+    "best_fp16_compiled": {
+      "max_abs_diff": 0.011526715010404587,
+      "top1_match": true,
+      "at_batch_size": 1
+    }
+  },
+  "results": {
+    "baseline": [
+      {
+        "batch_size": 1,
+        "ms": 4.7434274991974235
+      },
+      {
+        "batch_size": 4,
+        "ms": 14.691183340037242
+      },
+      {
+        "batch_size": 16,
+        "ms": 54.97902499977499
+      },
+      {
+        "batch_size": 32,
+        "ms": 108.9598658401519
+      }
+    ],
+    "best_fp16": [
+      {
+        "batch_size": 1,
+        "ms": 3.2562816597055644
+      },
+      {
+        "batch_size": 4,
+        "ms": 10.00633499934338
+      },
+      {
+        "batch_size": 16,
+        "ms": 37.044524159282446
+      },
+      {
+        "batch_size": 32,
+        "ms": 72.79704999993555
+      }
+    ],
+    "best_fp16_compiled": [
+      {
+        "batch_size": 1,
+        "ms": 5.058549179229885
+      },
+      {
+        "batch_size": 4,
+        "ms": 19.189714159583673
+      },
+      {
+        "batch_size": 16,
+        "ms": 73.47702334052883
+      },
+      {
+        "batch_size": 32,
+        "ms": 146.29427581909113
+      }
+    ]
+  },
+  "errors": {},
+  "mean_speedup": {
+    "best_fp16": 1.4764461530779978,
+    "best_fp16_compiled": 0.7990820392322198
+  }
+}

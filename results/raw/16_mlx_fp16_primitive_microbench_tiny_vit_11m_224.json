@@ -1,0 +1,74 @@
+{
+  "phase": "16_mlx_fp16_primitive_microbench",
+  "variant": "tiny_vit_11m_224",
+  "methodology_note": "Tests whether Phase 15's MLX-vs-PyTorch primitive slowdown (layer_norm ~14x, conv2d ~12x at fp32) changes at fp16 -- the precision Phase 14 found to be this project's single biggest PyTorch-MPS speedup lever. Same isolated microbenchmark methodology as Phase 15.",
+  "warmup": 20,
+  "iters": 300,
+  "blocks": [
+    {
+      "stage_idx": 1,
+      "dim": 128,
+      "window_size": 7,
+      "layer_norm": {
+        "pytorch_fp16_us": 29.750833346042782,
+        "mlx_fp16_us": 524.0287499812742,
+        "mlx_vs_pytorch_fp16_speedup": 0.05677328457094369,
+        "mlx_vs_pytorch_fp16_max_abs_diff": 0.0009765625,
+        "fp16_vs_fp32_max_abs_diff": 0.001641392707824707
+      },
+      "depthwise_conv2d": {
+        "pytorch_fp16_kernel_us": 24.13736336166039,
+        "mlx_fp16_us": 355.7726399352153,
+        "mlx_vs_pytorch_fp16_speedup": 0.06784491175615895,
+        "mlx_vs_pytorch_fp16_max_abs_diff": 0.0078125,
+        "fp16_vs_fp32_max_abs_diff": 0.005887031555175781
+      }
+    },
+    {
+      "stage_idx": 2,
+      "dim": 256,
+      "window_size": 14,
+      "layer_norm": {
+        "pytorch_fp16_us": 23.350833313694846,
+        "mlx_fp16_us": 231.0309732759682,
+        "mlx_vs_pytorch_fp16_speedup": 0.10107230637773448,
+        "mlx_vs_pytorch_fp16_max_abs_diff": 0.0009765625,
+        "fp16_vs_fp32_max_abs_diff": 0.0011965036392211914
+      },
+      "depthwise_conv2d": {
+        "pytorch_fp16_kernel_us": 22.130416667399306,
+        "mlx_fp16_us": 264.41764008874696,
+        "mlx_vs_pytorch_fp16_speedup": 0.083694932985453,
+        "mlx_vs_pytorch_fp16_max_abs_diff": 0.013671875,
+        "fp16_vs_fp32_max_abs_diff": 0.010243415832519531
+      }
+    },
+    {
+      "stage_idx": 3,
+      "dim": 448,
+      "window_size": 7,
+      "layer_norm": {
+        "pytorch_fp16_us": 26.171250016583752,
+        "mlx_fp16_us": 267.7511133758041,
+        "mlx_vs_pytorch_fp16_speedup": 0.097744691652695,
+        "mlx_vs_pytorch_fp16_max_abs_diff": 0.00048828125,
+        "fp16_vs_fp32_max_abs_diff": 0.0008859634399414062
+      },
+      "depthwise_conv2d": {
+        "pytorch_fp16_kernel_us": 22.648613279064495,
+        "mlx_fp16_us": 317.3168033633071,
+        "mlx_vs_pytorch_fp16_speedup": 0.07137539846300957,
+        "mlx_vs_pytorch_fp16_max_abs_diff": 0.015625,
+        "fp16_vs_fp32_max_abs_diff": 0.007818222045898438
+      }
+    }
+  ],
+  "mean_layer_norm_mlx_slowdown_fp16_x": 12.579519995119155,
+  "mean_conv2d_mlx_slowdown_fp16_x": 13.566027716748598,
+  "comparison_vs_phase15_fp32": {
+    "layer_norm_mlx_slowdown_fp32": 12.261096522047152,
+    "layer_norm_mlx_slowdown_fp16": 12.579519995119155,
+    "conv2d_mlx_slowdown_fp32": 12.116556219155855,
+    "conv2d_mlx_slowdown_fp16": 13.566027716748598
+  }
+}

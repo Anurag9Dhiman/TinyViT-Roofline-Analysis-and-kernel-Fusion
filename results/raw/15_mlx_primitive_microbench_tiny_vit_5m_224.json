@@ -1,0 +1,132 @@
+{
+  "phase": "15_mlx_primitive_microbench",
+  "variant": "tiny_vit_5m_224",
+  "methodology_note": "Verifies two claims in README.md/report.md that had no backing results/raw/*.json before this script existed: (1) full-block MLX fusion doesn't pay off because mx.fast.layer_norm and MLX's depthwise conv2d are slower than PyTorch-MPS at these shapes, and (2) an uncompiled MLX call re-traces the op graph and is markedly slower than the mx.compile-wrapped version.",
+  "warmup": 20,
+  "iters": 300,
+  "blocks": [
+    {
+      "stage_idx": 1,
+      "dim": 128,
+      "window_size": 7,
+      "layer_norm": {
+        "input_shape": [
+          16,
+          49,
+          128
+        ],
+        "pytorch_us": 33.39680333738215,
+        "mlx_us": 502.5584699857669,
+        "mlx_vs_pytorch_speedup": 0.06645356775765413,
+        "max_abs_diff": 6.407499313354492e-07
+      },
+      "mlx_attn_compile_benefit": {
+        "input_shape": [
+          16,
+          49,
+          128
+        ],
+        "uncompiled_us": 633.6573599886227,
+        "compiled_us": 498.1530533162489,
+        "compiled_speedup": 1.2720134018456972
+      },
+      "depthwise_conv2d": {
+        "input_shape_bchw": [
+          1,
+          128,
+          28,
+          28
+        ],
+        "pytorch_kernel_only_us": 21.07583333175474,
+        "pytorch_kernel_plus_layout_roundtrip_us": 29.693750014606245,
+        "mlx_us": 321.48222332277027,
+        "mlx_vs_pytorch_kernel_only_speedup": 0.06555831645656646,
+        "mlx_vs_pytorch_kernel_plus_layout_speedup": 0.0923651382888239,
+        "max_abs_diff": 2.6226043701171875e-06
+      }
+    },
+    {
+      "stage_idx": 2,
+      "dim": 160,
+      "window_size": 14,
+      "layer_norm": {
+        "input_shape": [
+          1,
+          196,
+          160
+        ],
+        "pytorch_us": 47.93249999541634,
+        "mlx_us": 474.3148633375919,
+        "mlx_vs_pytorch_speedup": 0.1010562891875909,
+        "max_abs_diff": 2.980232238769531e-07
+      },
+      "mlx_attn_compile_benefit": {
+        "input_shape": [
+          1,
+          196,
+          160
+        ],
+        "uncompiled_us": 570.2097233491562,
+        "compiled_us": 403.53194332662196,
+        "compiled_speedup": 1.4130473009112539
+      },
+      "depthwise_conv2d": {
+        "input_shape_bchw": [
+          1,
+          160,
+          14,
+          14
+        ],
+        "pytorch_kernel_only_us": 21.317640009025734,
+        "pytorch_kernel_plus_layout_roundtrip_us": 25.481943351527054,
+        "mlx_us": 233.3613900070001,
+        "mlx_vs_pytorch_kernel_only_speedup": 0.09135033009696364,
+        "mlx_vs_pytorch_kernel_plus_layout_speedup": 0.10919519870344738,
+        "max_abs_diff": 1.6689300537109375e-06
+      }
+    },
+    {
+      "stage_idx": 3,
+      "dim": 320,
+      "window_size": 7,
+      "layer_norm": {
+        "input_shape": [
+          1,
+          49,
+          320
+        ],
+        "pytorch_us": 13.971530012592364,
+        "mlx_us": 251.80847000835152,
+        "mlx_vs_pytorch_speedup": 0.05548475002500504,
+        "max_abs_diff": 7.152557373046875e-07
+      },
+      "mlx_attn_compile_benefit": {
+        "input_shape": [
+          1,
+          49,
+          320
+        ],
+        "uncompiled_us": 406.29152666951995,
+        "compiled_us": 380.22416665626224,
+        "compiled_speedup": 1.0685578726951979
+      },
+      "depthwise_conv2d": {
+        "input_shape_bchw": [
+          1,
+          320,
+          7,
+          7
+        ],
+        "pytorch_kernel_only_us": 20.808750001985267,
+        "pytorch_kernel_plus_layout_roundtrip_us": 24.976109998533502,
+        "mlx_us": 197.36639000863457,
+        "mlx_vs_pytorch_kernel_only_speedup": 0.1054320849718886,
+        "mlx_vs_pytorch_kernel_plus_layout_speedup": 0.1265469262392691,
+        "max_abs_diff": 9.5367431640625e-07
+      }
+    }
+  ],
+  "mean_layer_norm_mlx_slowdown_x": 14.322182147290647,
+  "mean_conv2d_mlx_slowdown_x_kernel_only": 11.895080525470226,
+  "mean_mlx_compile_speedup_x": 1.251206191817383
+}

@@ -1,0 +1,327 @@
+{
+  "phase": "01_baseline_profile",
+  "variant": "tiny_vit_5m_224",
+  "timm_id": "tiny_vit_5m_224.dist_in22k_ft_in1k",
+  "batch_size": 1,
+  "device": "mps",
+  "dtype": "float32",
+  "latency": {
+    "mean_ms": 4.965475779026747,
+    "std_ms": 0.20924145009396183,
+    "min_ms": 4.68291700235568,
+    "max_ms": 5.555874988203868,
+    "p50_ms": 4.941207997035235,
+    "p90_ms": 5.294458009302616,
+    "n": 50
+  },
+  "peak_memory_mb": 29.61669921875,
+  "op_breakdown_uninstrumented": {
+    "total_op_calls_per_iter": 1205.0,
+    "by_category": {
+      "conv": {
+        "self_cpu_time_us_per_iter": 1919.1425000000022,
+        "calls_per_iter": 162.0,
+        "ops": [
+          "aten::_batch_norm_impl_index",
+          "aten::_convolution",
+          "aten::_mps_convolution",
+          "aten::batch_norm",
+          "aten::convolution",
+          "aten::native_batch_norm"
+        ]
+      },
+      "linear_qkv_proj_or_mlp": {
+        "self_cpu_time_us_per_iter": 1217.1854999999955,
+        "calls_per_iter": 41.0,
+        "ops": [
+          "aten::linear"
+        ]
+      },
+      "attn_core_qk_softmax_av": {
+        "self_cpu_time_us_per_iter": 422.59059999999806,
+        "calls_per_iter": 20.0,
+        "ops": [
+          "aten::_scaled_dot_product_attention_math_for_mps",
+          "aten::scaled_dot_product_attention"
+        ]
+      },
+      "activation": {
+        "self_cpu_time_us_per_iter": 321.6636499999988,
+        "calls_per_iter": 23.0,
+        "ops": [
+          "aten::gelu"
+        ]
+      },
+      "alloc": {
+        "self_cpu_time_us_per_iter": 105.28885000001432,
+        "calls_per_iter": 344.0,
+        "ops": [
+          "aten::empty",
+          "aten::empty_like"
+        ]
+      },
+      "norm": {
+        "self_cpu_time_us_per_iter": 78.96149999998971,
+        "calls_per_iter": 42.0,
+        "ops": [
+          "aten::layer_norm",
+          "aten::native_layer_norm"
+        ]
+      },
+      "layout": {
+        "self_cpu_time_us_per_iter": 219.68825000000047,
+        "calls_per_iter": 446.0,
+        "ops": [
+          "aten::_reshape_alias",
+          "aten::_unsafe_view",
+          "aten::as_strided",
+          "aten::clone",
+          "aten::contiguous",
+          "aten::copy_",
+          "aten::expand",
+          "aten::permute",
+          "aten::reshape",
+          "aten::split_with_sizes",
+          "aten::transpose",
+          "aten::view"
+        ]
+      },
+      "elementwise": {
+        "self_cpu_time_us_per_iter": 44.31349999999378,
+        "calls_per_iter": 43.0,
+        "ops": [
+          "aten::add",
+          "aten::add_",
+          "aten::dropout"
+        ]
+      },
+      "head": {
+        "self_cpu_time_us_per_iter": 21.274650000000882,
+        "calls_per_iter": 3.0,
+        "ops": [
+          "aten::adaptive_avg_pool2d",
+          "aten::flatten",
+          "aten::mean"
+        ]
+      },
+      "other": {
+        "self_cpu_time_us_per_iter": 20.99729999999831,
+        "calls_per_iter": 81.0,
+        "ops": [
+          "aten::conv2d",
+          "aten::resize_"
+        ]
+      }
+    },
+    "top_ops": [
+      {
+        "name": "aten::native_batch_norm",
+        "count": 540,
+        "self_cpu_time_us": 25406.56999999997,
+        "cpu_time_total_us": 25971.19999999994,
+        "self_cpu_time_avg_us": 47.04920370370365
+      },
+      {
+        "name": "aten::linear",
+        "count": 820,
+        "self_cpu_time_us": 24343.709999999908,
+        "cpu_time_total_us": 24594.32799999995,
+        "self_cpu_time_avg_us": 29.687451219512084
+      },
+      {
+        "name": "aten::_mps_convolution",
+        "count": 540,
+        "self_cpu_time_us": 11026.851999999868,
+        "cpu_time_total_us": 11220.98599999992,
+        "self_cpu_time_avg_us": 20.42009629629605
+      },
+      {
+        "name": "aten::_scaled_dot_product_attention_math_for_mps",
+        "count": 200,
+        "self_cpu_time_us": 8300.13599999993,
+        "cpu_time_total_us": 8531.30799999995,
+        "self_cpu_time_avg_us": 41.50067999999965
+      },
+      {
+        "name": "aten::gelu",
+        "count": 460,
+        "self_cpu_time_us": 6433.2729999999765,
+        "cpu_time_total_us": 6433.2729999999765,
+        "self_cpu_time_avg_us": 13.985376086956471
+      },
+      {
+        "name": "aten::empty",
+        "count": 5820,
+        "self_cpu_time_us": 1774.0760000001565,
+        "cpu_time_total_us": 1774.0760000001565,
+        "self_cpu_time_avg_us": 0.30482405498284476
+      },
+      {
+        "name": "aten::native_layer_norm",
+        "count": 420,
+        "self_cpu_time_us": 1242.1359999997626,
+        "cpu_time_total_us": 2946.404999999995,
+        "self_cpu_time_avg_us": 2.9574666666661016
+      },
+      {
+        "name": "aten::copy_",
+        "count": 640,
+        "self_cpu_time_us": 995.8100000000468,
+        "cpu_time_total_us": 995.8100000000468,
+        "self_cpu_time_avg_us": 1.555953125000073
+      },
+      {
+        "name": "aten::add",
+        "count": 400,
+        "self_cpu_time_us": 772.3329999999589,
+        "cpu_time_total_us": 772.3329999999589,
+        "self_cpu_time_avg_us": 1.9308324999998974
+      },
+      {
+        "name": "aten::_convolution",
+        "count": 540,
+        "self_cpu_time_us": 604.2050000000589,
+        "cpu_time_total_us": 11825.190999999979,
+        "self_cpu_time_avg_us": 1.1188981481482574
+      },
+      {
+        "name": "aten::view",
+        "count": 2120,
+        "self_cpu_time_us": 550.161000000192,
+        "cpu_time_total_us": 550.161000000192,
+        "self_cpu_time_avg_us": 0.2595099056604679
+      },
+      {
+        "name": "aten::permute",
+        "count": 960,
+        "self_cpu_time_us": 531.7530000000709,
+        "cpu_time_total_us": 713.6839999999738,
+        "self_cpu_time_avg_us": 0.5539093750000739
+      },
+      {
+        "name": "aten::as_strided",
+        "count": 2240,
+        "self_cpu_time_us": 496.4079999999451,
+        "cpu_time_total_us": 496.4079999999451,
+        "self_cpu_time_avg_us": 0.2216107142856898
+      },
+      {
+        "name": "aten::batch_norm",
+        "count": 540,
+        "self_cpu_time_us": 475.6860000000614,
+        "cpu_time_total_us": 26989.60500000001,
+        "self_cpu_time_avg_us": 0.8809000000001137
+      },
+      {
+        "name": "aten::convolution",
+        "count": 540,
+        "self_cpu_time_us": 453.826000000029,
+        "cpu_time_total_us": 12279.017000000007,
+        "self_cpu_time_avg_us": 0.8404185185185723
+      },
+      {
+        "name": "aten::reshape",
+        "count": 640,
+        "self_cpu_time_us": 452.11100000012584,
+        "cpu_time_total_us": 1482.821000000087,
+        "self_cpu_time_avg_us": 0.7064234375001966
+      },
+      {
+        "name": "aten::_batch_norm_impl_index",
+        "count": 540,
+        "self_cpu_time_us": 415.7110000000512,
+        "cpu_time_total_us": 26513.91899999995,
+        "self_cpu_time_avg_us": 0.7698351851852799
+      },
+      {
+        "name": "aten::transpose",
+        "count": 480,
+        "self_cpu_time_us": 405.70099999988724,
+        "cpu_time_total_us": 560.6169999999124,
+        "self_cpu_time_avg_us": 0.8452104166664317
+      },
+      {
+        "name": "aten::mean",
+        "count": 20,
+        "self_cpu_time_us": 403.3769999999977,
+        "cpu_time_total_us": 403.3769999999977,
+        "self_cpu_time_avg_us": 20.168849999999885
+      },
+      {
+        "name": "aten::conv2d",
+        "count": 540,
+        "self_cpu_time_us": 345.79200000003357,
+        "cpu_time_total_us": 12624.809000000041,
+        "self_cpu_time_avg_us": 0.6403555555556177
+      }
+    ]
+  },
+  "op_breakdown_instrumented_fine_grained": [
+    {
+      "name": "tinyvit/block/mlp",
+      "self_cpu_time_us_per_iter": 214.4646999999969,
+      "calls_per_iter": 10.0
+    },
+    {
+      "name": "tinyvit/block/local_conv",
+      "self_cpu_time_us_per_iter": 148.50624999999482,
+      "calls_per_iter": 10.0
+    },
+    {
+      "name": "tinyvit/attn/split_permute",
+      "self_cpu_time_us_per_iter": 84.75134999999777,
+      "calls_per_iter": 10.0
+    },
+    {
+      "name": "tinyvit/block/reshape_full_window",
+      "self_cpu_time_us_per_iter": 76.55024999999667,
+      "calls_per_iter": 16.0
+    },
+    {
+      "name": "tinyvit/attn/norm",
+      "self_cpu_time_us_per_iter": 65.90600000000096,
+      "calls_per_iter": 10.0
+    },
+    {
+      "name": "tinyvit/attn/out_proj",
+      "self_cpu_time_us_per_iter": 65.64319999999859,
+      "calls_per_iter": 10.0
+    },
+    {
+      "name": "tinyvit/attn/qkv_proj",
+      "self_cpu_time_us_per_iter": 60.608999999996605,
+      "calls_per_iter": 10.0
+    },
+    {
+      "name": "tinyvit/attn/merge_heads",
+      "self_cpu_time_us_per_iter": 60.36600000000503,
+      "calls_per_iter": 10.0
+    },
+    {
+      "name": "tinyvit/block/residual_add_1",
+      "self_cpu_time_us_per_iter": 58.05419999999707,
+      "calls_per_iter": 10.0
+    },
+    {
+      "name": "tinyvit/attn/sdpa_qk_softmax_av",
+      "self_cpu_time_us_per_iter": 57.1684499999959,
+      "calls_per_iter": 10.0
+    },
+    {
+      "name": "tinyvit/attn/bias_gather",
+      "self_cpu_time_us_per_iter": 47.48924999999963,
+      "calls_per_iter": 10.0
+    },
+    {
+      "name": "tinyvit/block/window_partition",
+      "self_cpu_time_us_per_iter": 18.0854500000003,
+      "calls_per_iter": 2.0
+    },
+    {
+      "name": "tinyvit/block/window_reverse",
+      "self_cpu_time_us_per_iter": 13.434800000000394,
+      "calls_per_iter": 2.0
+    }
+  ],
+  "chrome_trace_path": "/Users/anuragdhiman/Documents/tinyViT/results/traces/01_baseline_tiny_vit_5m_224_bs1.json"
+}

@@ -1,0 +1,1471 @@
+{
+  "phase": "06_ablation",
+  "grid": {
+    "window_sizes": [
+      4,
+      7,
+      14
+    ],
+    "embed_dims": [
+      64,
+      96,
+      192,
+      384,
+      576
+    ],
+    "batch_sizes": [
+      1,
+      4,
+      16,
+      32
+    ]
+  },
+  "num_configs": 60,
+  "num_completed": 60,
+  "complete": true,
+  "num_mlx_correct": 60,
+  "mean_speedup_pytorch_optimized": 0.8987732055355074,
+  "mean_speedup_mlx_fused_correctness_gated": 0.6810108465911885,
+  "results": [
+    {
+      "window_size": 4,
+      "dim": 64,
+      "batch_size": 1,
+      "num_windows": 16,
+      "num_heads": 2,
+      "latency_ms": {
+        "pytorch_baseline": 0.1282870801514946,
+        "pytorch_optimized": 0.12012833001790568,
+        "mlx_fused": 0.37791708018630743
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.0679169529150434,
+        "mlx_fused": 0.33945827504872494
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.043081283569336e-07,
+        "mean_abs_diff": 1.698799678706564e-08,
+        "cosine_similarity": 0.9999999656763263,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 4,
+      "dim": 64,
+      "batch_size": 4,
+      "num_windows": 16,
+      "num_heads": 2,
+      "latency_ms": {
+        "pytorch_baseline": 0.12012916005915031,
+        "pytorch_optimized": 0.234464579843916,
+        "mlx_fused": 0.42785208992427215
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.5123552569821879,
+        "mlx_fused": 0.28077263822741316
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.043081283569336e-07,
+        "mean_abs_diff": 1.665239324211143e-08,
+        "cosine_similarity": 1.0000001105864091,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 4,
+      "dim": 64,
+      "batch_size": 16,
+      "num_windows": 16,
+      "num_heads": 2,
+      "latency_ms": {
+        "pytorch_baseline": 0.22276250005234033,
+        "pytorch_optimized": 0.5316316700191237,
+        "mlx_fused": 0.9454970801016316
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.4190166098350145,
+        "mlx_fused": 0.23560358327959674
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 8.940696716308594e-08,
+        "mean_abs_diff": 1.6086403320514364e-08,
+        "cosine_similarity": 1.0000000628225985,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 4,
+      "dim": 64,
+      "batch_size": 32,
+      "num_windows": 16,
+      "num_heads": 2,
+      "latency_ms": {
+        "pytorch_baseline": 0.4610745800891891,
+        "pytorch_optimized": 1.0432891600066796,
+        "mlx_fused": 1.5557466700556688
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.4419432289378307,
+        "mlx_fused": 0.2963686755458012
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 8.940696716308594e-08,
+        "mean_abs_diff": 1.5863406588323414e-08,
+        "cosine_similarity": 1.0000000045229804,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 4,
+      "dim": 96,
+      "batch_size": 1,
+      "num_windows": 16,
+      "num_heads": 3,
+      "latency_ms": {
+        "pytorch_baseline": 0.1285241698496975,
+        "pytorch_optimized": 0.13255541009129956,
+        "mlx_fused": 0.3367399997659959
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.9695882632113959,
+        "mlx_fused": 0.38167182377801945
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.1920928955078125e-07,
+        "mean_abs_diff": 1.943544702953659e-08,
+        "cosine_similarity": 1.0000000547941155,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 4,
+      "dim": 96,
+      "batch_size": 4,
+      "num_windows": 16,
+      "num_heads": 3,
+      "latency_ms": {
+        "pytorch_baseline": 0.1301204101764597,
+        "pytorch_optimized": 0.4235274999518879,
+        "mlx_fused": 0.5708462500479072
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.30723013308755914,
+        "mlx_fused": 0.22794300595920455
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.1920928955078125e-07,
+        "mean_abs_diff": 1.7016853703921697e-08,
+        "cosine_similarity": 1.0000000909493703,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 4,
+      "dim": 96,
+      "batch_size": 16,
+      "num_windows": 16,
+      "num_heads": 3,
+      "latency_ms": {
+        "pytorch_baseline": 0.3719704199465923,
+        "pytorch_optimized": 1.1027391700190492,
+        "mlx_fused": 1.1872495801071636
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.33731496083535945,
+        "mlx_fused": 0.31330431796237607
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.1920928955078125e-07,
+        "mean_abs_diff": 1.8989490868648318e-08,
+        "cosine_similarity": 1.00000002681713,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 4,
+      "dim": 96,
+      "batch_size": 32,
+      "num_windows": 16,
+      "num_heads": 3,
+      "latency_ms": {
+        "pytorch_baseline": 0.7895666698459536,
+        "pytorch_optimized": 2.3479029201553203,
+        "mlx_fused": 2.1617012500064448
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.33628590989346424,
+        "mlx_fused": 0.36525244635150195
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.1920928955078125e-07,
+        "mean_abs_diff": 1.793705450836569e-08,
+        "cosine_similarity": 1.0000001670463041,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 4,
+      "dim": 192,
+      "batch_size": 1,
+      "num_windows": 16,
+      "num_heads": 6,
+      "latency_ms": {
+        "pytorch_baseline": 0.14585916011128575,
+        "pytorch_optimized": 0.3576012499979697,
+        "mlx_fused": 0.41776750003919005
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.40788213159801273,
+        "mlx_fused": 0.3491395575232706
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.341104507446289e-07,
+        "mean_abs_diff": 2.1890818047154426e-08,
+        "cosine_similarity": 1.0000000243036768,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 4,
+      "dim": 192,
+      "batch_size": 4,
+      "num_windows": 16,
+      "num_heads": 6,
+      "latency_ms": {
+        "pytorch_baseline": 0.27775082999141887,
+        "pytorch_optimized": 1.1101862500072457,
+        "mlx_fused": 0.804964589769952
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.2501839938925618,
+        "mlx_fused": 0.3450472648378189
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.7881393432617188e-07,
+        "mean_abs_diff": 2.2827412848869244e-08,
+        "cosine_similarity": 0.9999999542595365,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 4,
+      "dim": 192,
+      "batch_size": 16,
+      "num_windows": 16,
+      "num_heads": 6,
+      "latency_ms": {
+        "pytorch_baseline": 1.1444429200491868,
+        "pytorch_optimized": 5.602040420053527,
+        "mlx_fused": 2.6068266699439846
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.20429037176391024,
+        "mlx_fused": 0.43901765055740305
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.7881393432617188e-07,
+        "mean_abs_diff": 2.3984208397109796e-08,
+        "cosine_similarity": 1.0000000107355966,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 4,
+      "dim": 192,
+      "batch_size": 32,
+      "num_windows": 16,
+      "num_heads": 6,
+      "latency_ms": {
+        "pytorch_baseline": 3.1059654100681655,
+        "pytorch_optimized": 12.172212910081726,
+        "mlx_fused": 4.3883379199542105
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.25516850822545395,
+        "mlx_fused": 0.7077771736640952
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.7881393432617188e-07,
+        "mean_abs_diff": 2.2718571912605512e-08,
+        "cosine_similarity": 1.0000000750271316,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 4,
+      "dim": 384,
+      "batch_size": 1,
+      "num_windows": 16,
+      "num_heads": 12,
+      "latency_ms": {
+        "pytorch_baseline": 0.2962583300541155,
+        "pytorch_optimized": 0.2961900000809692,
+        "mlx_fused": 0.6902066699694842
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.0002306964216472,
+        "mlx_fused": 0.4292313345323276
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 2.384185791015625e-07,
+        "mean_abs_diff": 2.877655980171312e-08,
+        "cosine_similarity": 0.9999999772192756,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 4,
+      "dim": 384,
+      "batch_size": 4,
+      "num_windows": 16,
+      "num_heads": 12,
+      "latency_ms": {
+        "pytorch_baseline": 0.9971158299595118,
+        "pytorch_optimized": 1.0282020800514147,
+        "mlx_fused": 1.7841854199650697
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.9697664003068847,
+        "mlx_fused": 0.5588633439113256
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 3.2782554626464844e-07,
+        "mean_abs_diff": 2.7971642779789363e-08,
+        "cosine_similarity": 1.0000000905773687,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 4,
+      "dim": 384,
+      "batch_size": 16,
+      "num_windows": 16,
+      "num_heads": 12,
+      "latency_ms": {
+        "pytorch_baseline": 4.433682920061983,
+        "pytorch_optimized": 5.181348749902099,
+        "mlx_fused": 6.780877080163918
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.8557005393905894,
+        "mlx_fused": 0.6538509499061447
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 2.980232238769531e-07,
+        "mean_abs_diff": 2.7698698445988157e-08,
+        "cosine_similarity": 0.9999999706289121,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 4,
+      "dim": 384,
+      "batch_size": 32,
+      "num_windows": 16,
+      "num_heads": 12,
+      "latency_ms": {
+        "pytorch_baseline": 11.202059999923222,
+        "pytorch_optimized": 11.49873624992324,
+        "mlx_fused": 13.724130420014262
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.974199229936942,
+        "mlx_fused": 0.8162309492182441
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 2.980232238769531e-07,
+        "mean_abs_diff": 2.9575383919677734e-08,
+        "cosine_similarity": 1.0000000116142052,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 4,
+      "dim": 576,
+      "batch_size": 1,
+      "num_windows": 16,
+      "num_heads": 18,
+      "latency_ms": {
+        "pytorch_baseline": 0.7183395800529979,
+        "pytorch_optimized": 0.7064770901342854,
+        "mlx_fused": 1.2364029200398363
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.0167910468497396,
+        "mlx_fused": 0.5809914942855792
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 2.682209014892578e-07,
+        "mean_abs_diff": 3.266448800332e-08,
+        "cosine_similarity": 0.9999999836657864,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 4,
+      "dim": 576,
+      "batch_size": 4,
+      "num_windows": 16,
+      "num_heads": 18,
+      "latency_ms": {
+        "pytorch_baseline": 2.4019275000318885,
+        "pytorch_optimized": 2.6841404201695696,
+        "mlx_fused": 3.564684579905588
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.8948591072147216,
+        "mlx_fused": 0.6738120712199183
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 3.2782554626464844e-07,
+        "mean_abs_diff": 3.334552900469134e-08,
+        "cosine_similarity": 1.0000000329263308,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 4,
+      "dim": 576,
+      "batch_size": 16,
+      "num_windows": 16,
+      "num_heads": 18,
+      "latency_ms": {
+        "pytorch_baseline": 12.375771670194808,
+        "pytorch_optimized": 11.159361670142971,
+        "mlx_fused": 12.782860829902347
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.1090035466191905,
+        "mlx_fused": 0.9681535170315511
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 2.980232238769531e-07,
+        "mean_abs_diff": 3.455118502415644e-08,
+        "cosine_similarity": 1.0000000187470273,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 4,
+      "dim": 576,
+      "batch_size": 32,
+      "num_windows": 16,
+      "num_heads": 18,
+      "latency_ms": {
+        "pytorch_baseline": 25.04160625016084,
+        "pytorch_optimized": 21.834331669961102,
+        "mlx_fused": 25.346901250013616
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.146891355718123,
+        "mlx_fused": 0.987955332415531
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 3.8743019104003906e-07,
+        "mean_abs_diff": 3.539950910180778e-08,
+        "cosine_similarity": 1.0000000255763226,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 64,
+      "batch_size": 1,
+      "num_windows": 16,
+      "num_heads": 2,
+      "latency_ms": {
+        "pytorch_baseline": 0.14879916998324916,
+        "pytorch_optimized": 0.1508687497698702,
+        "mlx_fused": 0.5658312499872409
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.9862822500366849,
+        "mlx_fused": 0.26297446453621015
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 8.940696716308594e-08,
+        "mean_abs_diff": 1.2789137748825397e-08,
+        "cosine_similarity": 1.0000000154592292,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 64,
+      "batch_size": 4,
+      "num_windows": 16,
+      "num_heads": 2,
+      "latency_ms": {
+        "pytorch_baseline": 0.3896587499184534,
+        "pytorch_optimized": 0.3876854100963101,
+        "mlx_fused": 1.0772724999696948
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.0050900543862433,
+        "mlx_fused": 0.36170862054811115
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 6.705522537231445e-08,
+        "mean_abs_diff": 1.0795219829162761e-08,
+        "cosine_similarity": 1.0000000323187108,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 64,
+      "batch_size": 16,
+      "num_windows": 16,
+      "num_heads": 2,
+      "latency_ms": {
+        "pytorch_baseline": 1.3117462501395494,
+        "pytorch_optimized": 1.3498904200969264,
+        "mlx_fused": 3.1636229099240154
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.9717427656426822,
+        "mlx_fused": 0.4146341986665709
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 7.450580596923828e-08,
+        "mean_abs_diff": 1.2687618067275253e-08,
+        "cosine_similarity": 0.9999999896638547,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 64,
+      "batch_size": 32,
+      "num_windows": 16,
+      "num_heads": 2,
+      "latency_ms": {
+        "pytorch_baseline": 2.713645419862587,
+        "pytorch_optimized": 3.0810712499078363,
+        "mlx_fused": 6.563683749991469
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.8807473764015551,
+        "mlx_fused": 0.4134332980113666
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 8.940696716308594e-08,
+        "mean_abs_diff": 1.2445043218178853e-08,
+        "cosine_similarity": 1.0000000412321695,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 96,
+      "batch_size": 1,
+      "num_windows": 16,
+      "num_heads": 3,
+      "latency_ms": {
+        "pytorch_baseline": 0.1933429201017134,
+        "pytorch_optimized": 0.19917292025638744,
+        "mlx_fused": 0.617858339974191
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.9707289517713086,
+        "mlx_fused": 0.3129243510895874
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.043081283569336e-07,
+        "mean_abs_diff": 1.3250317287827329e-08,
+        "cosine_similarity": 0.9999999653619035,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 96,
+      "batch_size": 4,
+      "num_windows": 16,
+      "num_heads": 3,
+      "latency_ms": {
+        "pytorch_baseline": 0.6225737498607486,
+        "pytorch_optimized": 0.6074975000228733,
+        "mlx_fused": 1.4162787501118146
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.0248169742876436,
+        "mlx_fused": 0.4395841918913185
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 8.940696716308594e-08,
+        "mean_abs_diff": 1.3057621650602869e-08,
+        "cosine_similarity": 0.9999999764845288,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 96,
+      "batch_size": 16,
+      "num_windows": 16,
+      "num_heads": 3,
+      "latency_ms": {
+        "pytorch_baseline": 2.33076416014228,
+        "pytorch_optimized": 2.6635545800672844,
+        "mlx_fused": 4.707532910106238
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.8750577809009652,
+        "mlx_fused": 0.4951137261597349
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 7.450580596923828e-08,
+        "mean_abs_diff": 1.2560455786569946e-08,
+        "cosine_similarity": 1.0000000720860893,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 96,
+      "batch_size": 32,
+      "num_windows": 16,
+      "num_heads": 3,
+      "latency_ms": {
+        "pytorch_baseline": 5.59300415974576,
+        "pytorch_optimized": 6.403835419914685,
+        "mlx_fused": 8.383021659974474
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.8733834948900471,
+        "mlx_fused": 0.667182358176418
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 8.940696716308594e-08,
+        "mean_abs_diff": 1.23324142009551e-08,
+        "cosine_similarity": 1.000000019717674,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 192,
+      "batch_size": 1,
+      "num_windows": 16,
+      "num_heads": 6,
+      "latency_ms": {
+        "pytorch_baseline": 0.4439645798993297,
+        "pytorch_optimized": 0.440947079914622,
+        "mlx_fused": 0.8339783301926218
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.00684322478174,
+        "mlx_fused": 0.5323454624975548
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.341104507446289e-07,
+        "mean_abs_diff": 1.4500584732957122e-08,
+        "cosine_similarity": 0.9999999360449112,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 192,
+      "batch_size": 4,
+      "num_windows": 16,
+      "num_heads": 6,
+      "latency_ms": {
+        "pytorch_baseline": 1.581522919877898,
+        "pytorch_optimized": 1.754075410135556,
+        "mlx_fused": 2.794884580071084
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.9016276670543354,
+        "mlx_fused": 0.565863410301428
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.4901161193847656e-07,
+        "mean_abs_diff": 1.3633709272653505e-08,
+        "cosine_similarity": 1.0000000504910096,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 192,
+      "batch_size": 16,
+      "num_windows": 16,
+      "num_heads": 6,
+      "latency_ms": {
+        "pytorch_baseline": 12.399646659905557,
+        "pytorch_optimized": 9.285026670258958,
+        "mlx_fused": 11.01817833026871
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.335445454305812,
+        "mlx_fused": 1.1253808286839693
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.341104507446289e-07,
+        "mean_abs_diff": 1.5228362570951504e-08,
+        "cosine_similarity": 0.9999999820164286,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 192,
+      "batch_size": 32,
+      "num_windows": 16,
+      "num_heads": 6,
+      "latency_ms": {
+        "pytorch_baseline": 15.867768329917451,
+        "pytorch_optimized": 17.48785040981602,
+        "mlx_fused": 17.485598750063218
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.9073595643871011,
+        "mlx_fused": 0.9074764071124578
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.4901161193847656e-07,
+        "mean_abs_diff": 1.50409533716811e-08,
+        "cosine_similarity": 1.0000001027317071,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 384,
+      "batch_size": 1,
+      "num_windows": 16,
+      "num_heads": 12,
+      "latency_ms": {
+        "pytorch_baseline": 1.1994754199986346,
+        "pytorch_optimized": 1.17675416986458,
+        "mlx_fused": 1.513242920045741
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.019308408430513,
+        "mlx_fused": 0.79265225966653
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.6391277313232422e-07,
+        "mean_abs_diff": 1.7936120144668166e-08,
+        "cosine_similarity": 1.0000000022209992,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 384,
+      "batch_size": 4,
+      "num_windows": 16,
+      "num_heads": 12,
+      "latency_ms": {
+        "pytorch_baseline": 4.558718749904074,
+        "pytorch_optimized": 5.461007500125561,
+        "mlx_fused": 7.3094766700523905
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.8347761378828463,
+        "mlx_fused": 0.623672385272337
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.4901161193847656e-07,
+        "mean_abs_diff": 1.808218463850153e-08,
+        "cosine_similarity": 1.0000000208789717,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 384,
+      "batch_size": 16,
+      "num_windows": 16,
+      "num_heads": 12,
+      "latency_ms": {
+        "pytorch_baseline": 23.826399169920478,
+        "pytorch_optimized": 33.70783416990889,
+        "mlx_fused": 26.678931250062305
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.7068504920790905,
+        "mlx_fused": 0.8930792221995337
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.7881393432617188e-07,
+        "mean_abs_diff": 1.8672137613862105e-08,
+        "cosine_similarity": 0.9999999302818451,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 384,
+      "batch_size": 32,
+      "num_windows": 16,
+      "num_heads": 12,
+      "latency_ms": {
+        "pytorch_baseline": 50.59368124988396,
+        "pytorch_optimized": 49.476570000115316,
+        "mlx_fused": 61.94199416000629
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.022578591235529,
+        "mlx_fused": 0.8167912889467558
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.7881393432617188e-07,
+        "mean_abs_diff": 1.7409012897928733e-08,
+        "cosine_similarity": 1.0000000479720899,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 576,
+      "batch_size": 1,
+      "num_windows": 16,
+      "num_heads": 18,
+      "latency_ms": {
+        "pytorch_baseline": 3.006568750133738,
+        "pytorch_optimized": 3.0705054200370796,
+        "mlx_fused": 3.6835029200301506
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.9791771512643773,
+        "mlx_fused": 0.8162254287310646
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 2.384185791015625e-07,
+        "mean_abs_diff": 2.121462117088413e-08,
+        "cosine_similarity": 0.9999999862118634,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 576,
+      "batch_size": 4,
+      "num_windows": 16,
+      "num_heads": 18,
+      "latency_ms": {
+        "pytorch_baseline": 15.83330749999732,
+        "pytorch_optimized": 13.260222919925582,
+        "mlx_fused": 13.588505420193542
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.1940453486800189,
+        "mlx_fused": 1.1651986006104713
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 2.086162567138672e-07,
+        "mean_abs_diff": 2.0881813611595135e-08,
+        "cosine_similarity": 1.0000000312998583,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 576,
+      "batch_size": 16,
+      "num_windows": 16,
+      "num_heads": 18,
+      "latency_ms": {
+        "pytorch_baseline": 58.40056958986679,
+        "pytorch_optimized": 59.35528708010679,
+        "mlx_fused": 63.621829169860575
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.9839152072678632,
+        "mlx_fused": 0.9179328911456819
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 2.086162567138672e-07,
+        "mean_abs_diff": 2.0807744860462662e-08,
+        "cosine_similarity": 1.0000000372368125,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 7,
+      "dim": 576,
+      "batch_size": 32,
+      "num_windows": 16,
+      "num_heads": 18,
+      "latency_ms": {
+        "pytorch_baseline": 125.74970042012865,
+        "pytorch_optimized": 121.25161208998179,
+        "mlx_fused": 136.07769166992512
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.0370971424842483,
+        "mlx_fused": 0.9241022453934006
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 2.384185791015625e-07,
+        "mean_abs_diff": 2.045168123743224e-08,
+        "cosine_similarity": 0.9999999615454207,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 64,
+      "batch_size": 1,
+      "num_windows": 16,
+      "num_heads": 2,
+      "latency_ms": {
+        "pytorch_baseline": 1.0699629201553762,
+        "pytorch_optimized": 1.0241975000826642,
+        "mlx_fused": 1.600355840055272
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.0446841747504931,
+        "mlx_fused": 0.6685781332971688
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 7.450580596923828e-08,
+        "mean_abs_diff": 1.0854972032348087e-08,
+        "cosine_similarity": 0.9999999582082274,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 64,
+      "batch_size": 4,
+      "num_windows": 16,
+      "num_heads": 2,
+      "latency_ms": {
+        "pytorch_baseline": 3.2645900000352412,
+        "pytorch_optimized": 4.225405000033788,
+        "mlx_fused": 6.750100830104202
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.7726099628341273,
+        "mlx_fused": 0.4836357385175305
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 7.450580596923828e-08,
+        "mean_abs_diff": 1.0854614984623367e-08,
+        "cosine_similarity": 0.9999999769512026,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 64,
+      "batch_size": 16,
+      "num_windows": 16,
+      "num_heads": 2,
+      "latency_ms": {
+        "pytorch_baseline": 24.511354999849573,
+        "pytorch_optimized": 20.57696500007296,
+        "mlx_fused": 23.717568749852944
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.1912036104334467,
+        "mlx_fused": 1.0334682807655633
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 7.450580596923828e-08,
+        "mean_abs_diff": 1.101969804295777e-08,
+        "cosine_similarity": 1.0000000291078233,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 64,
+      "batch_size": 32,
+      "num_windows": 16,
+      "num_heads": 2,
+      "latency_ms": {
+        "pytorch_baseline": 46.173260000068694,
+        "pytorch_optimized": 41.616169580083806,
+        "mlx_fused": 53.14296791999368
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.1095028799134308,
+        "mlx_fused": 0.8688498555365252
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 7.450580596923828e-08,
+        "mean_abs_diff": 1.022122120275526e-08,
+        "cosine_similarity": 0.9999999949409585,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 96,
+      "batch_size": 1,
+      "num_windows": 16,
+      "num_heads": 3,
+      "latency_ms": {
+        "pytorch_baseline": 2.3138783301692456,
+        "pytorch_optimized": 2.5381650001509115,
+        "mlx_fused": 3.284090829838533
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.9116343224462041,
+        "mlx_fused": 0.7045719652897088
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 8.940696716308594e-08,
+        "mean_abs_diff": 1.066345323152973e-08,
+        "cosine_similarity": 0.9999998484106957,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 96,
+      "batch_size": 4,
+      "num_windows": 16,
+      "num_heads": 3,
+      "latency_ms": {
+        "pytorch_baseline": 9.148293330217712,
+        "pytorch_optimized": 7.576018339896109,
+        "mlx_fused": 8.428950419765897
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.2075331552514645,
+        "mlx_fused": 1.085341931631838
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 8.940696716308594e-08,
+        "mean_abs_diff": 1.0557251961529346e-08,
+        "cosine_similarity": 1.0000001052516005,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 96,
+      "batch_size": 16,
+      "num_windows": 16,
+      "num_heads": 3,
+      "latency_ms": {
+        "pytorch_baseline": 32.324334169970825,
+        "pytorch_optimized": 29.71478166989982,
+        "mlx_fused": 39.13151666987687
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.0878200125802844,
+        "mlx_fused": 0.8260434790367795
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 7.078051567077637e-08,
+        "mean_abs_diff": 1.025205342841673e-08,
+        "cosine_similarity": 1.0000000227052979,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 96,
+      "batch_size": 32,
+      "num_windows": 16,
+      "num_heads": 3,
+      "latency_ms": {
+        "pytorch_baseline": 63.70487250009319,
+        "pytorch_optimized": 58.288242499984335,
+        "mlx_fused": 79.13480666000396
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.0929283465719575,
+        "mlx_fused": 0.8050170991608764
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 7.450580596923828e-08,
+        "mean_abs_diff": 1.064624211011278e-08,
+        "cosine_similarity": 0.9999999542369676,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 192,
+      "batch_size": 1,
+      "num_windows": 16,
+      "num_heads": 6,
+      "latency_ms": {
+        "pytorch_baseline": 3.850715830049012,
+        "pytorch_optimized": 4.309990420006216,
+        "mlx_fused": 4.841375419928227
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.8934395334557285,
+        "mlx_fused": 0.7953764160074367
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 7.450580596923828e-08,
+        "mean_abs_diff": 9.874256967634665e-09,
+        "cosine_similarity": 1.0000000295967981,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 192,
+      "batch_size": 4,
+      "num_windows": 16,
+      "num_heads": 6,
+      "latency_ms": {
+        "pytorch_baseline": 18.6755766600254,
+        "pytorch_optimized": 16.571340830123518,
+        "mlx_fused": 16.03431625000667
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.126980420683689,
+        "mlx_fused": 1.1647254780831475
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 7.450580596923828e-08,
+        "mean_abs_diff": 1.0201572919754653e-08,
+        "cosine_similarity": 1.000000049449563,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 192,
+      "batch_size": 16,
+      "num_windows": 16,
+      "num_heads": 6,
+      "latency_ms": {
+        "pytorch_baseline": 72.57774041994708,
+        "pytorch_optimized": 70.76758542010793,
+        "mlx_fused": 74.45031874987762
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.0255788718675827,
+        "mlx_fused": 0.9748479474450388
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 6.705522537231445e-08,
+        "mean_abs_diff": 9.93365745216579e-09,
+        "cosine_similarity": 1.0000000441452728,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 192,
+      "batch_size": 32,
+      "num_windows": 16,
+      "num_heads": 6,
+      "latency_ms": {
+        "pytorch_baseline": 132.36836208991008,
+        "pytorch_optimized": 137.82752832979895,
+        "mlx_fused": 198.13049499993213
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.9603913216318734,
+        "mlx_fused": 0.6680867682178627
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 7.450580596923828e-08,
+        "mean_abs_diff": 1.0218844437304142e-08,
+        "cosine_similarity": 0.9999999169796461,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 384,
+      "batch_size": 1,
+      "num_windows": 16,
+      "num_heads": 12,
+      "latency_ms": {
+        "pytorch_baseline": 8.507251669943798,
+        "pytorch_optimized": 9.681117919972166,
+        "mlx_fused": 9.91070749994833
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 0.8787468286480967,
+        "mlx_fused": 0.8583899454189473
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 8.940696716308594e-08,
+        "mean_abs_diff": 1.0420772689201385e-08,
+        "cosine_similarity": 0.9999999599858214,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 384,
+      "batch_size": 4,
+      "num_windows": 16,
+      "num_heads": 12,
+      "latency_ms": {
+        "pytorch_baseline": 60.45208083000034,
+        "pytorch_optimized": 55.472138749901205,
+        "mlx_fused": 74.90388917009113
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.0897737529564424,
+        "mlx_fused": 0.8070619763511377
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 9.685754776000977e-08,
+        "mean_abs_diff": 1.0962716956441909e-08,
+        "cosine_similarity": 0.9999999015166311,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 384,
+      "batch_size": 16,
+      "num_windows": 16,
+      "num_heads": 12,
+      "latency_ms": {
+        "pytorch_baseline": 214.44261999975424,
+        "pytorch_optimized": 205.88618250010768,
+        "mlx_fused": 200.32352208014345
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.0415590662556584,
+        "mlx_fused": 1.070481478026141
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 8.940696716308594e-08,
+        "mean_abs_diff": 1.0897747593219265e-08,
+        "cosine_similarity": 1.0000000530705617,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 384,
+      "batch_size": 32,
+      "num_windows": 16,
+      "num_heads": 12,
+      "latency_ms": {
+        "pytorch_baseline": 344.574517919973,
+        "pytorch_optimized": 333.6029849998886,
+        "mlx_fused": 381.77864333003527
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.032887993853197,
+        "mlx_fused": 0.9025505327234858
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 9.685754776000977e-08,
+        "mean_abs_diff": 1.0735479172296891e-08,
+        "cosine_similarity": 0.999999843112746,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 576,
+      "batch_size": 1,
+      "num_windows": 16,
+      "num_heads": 18,
+      "latency_ms": {
+        "pytorch_baseline": 24.628323330252897,
+        "pytorch_optimized": 18.31608957989374,
+        "mlx_fused": 21.740633329900447
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.3446278051232252,
+        "mlx_fused": 1.1328245574327838
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.341104507446289e-07,
+        "mean_abs_diff": 1.2605243959740164e-08,
+        "cosine_similarity": 1.0000000537390412,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 576,
+      "batch_size": 4,
+      "num_windows": 16,
+      "num_heads": 18,
+      "latency_ms": {
+        "pytorch_baseline": 76.46770750026917,
+        "pytorch_optimized": 74.55865875002928,
+        "mlx_fused": 83.58600874984404
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.02560465521034,
+        "mlx_fused": 0.9148386033016782
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.4901161193847656e-07,
+        "mean_abs_diff": 1.2647132230370062e-08,
+        "cosine_similarity": 0.9999999603776052,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 576,
+      "batch_size": 16,
+      "num_windows": 16,
+      "num_heads": 18,
+      "latency_ms": {
+        "pytorch_baseline": 369.48192332987674,
+        "pytorch_optimized": 366.4597587499884,
+        "mlx_fused": 436.2159020800027
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.0082469207265679,
+        "mlx_fused": 0.847016171506084
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.4901161193847656e-07,
+        "mean_abs_diff": 1.2520623648981655e-08,
+        "cosine_similarity": 0.9999999916576784,
+        "atol": 0.002,
+        "passed": true
+      }
+    },
+    {
+      "window_size": 14,
+      "dim": 576,
+      "batch_size": 32,
+      "num_windows": 16,
+      "num_heads": 18,
+      "latency_ms": {
+        "pytorch_baseline": 688.8978837500326,
+        "pytorch_optimized": 633.6753487499664,
+        "mlx_fused": 810.2551512501668
+      },
+      "speedup_vs_baseline": {
+        "pytorch_optimized": 1.0871464151304011,
+        "mlx_fused": 0.850223392825225
+      },
+      "pytorch_optimized_compiled_successfully": true,
+      "mlx_correctness": {
+        "max_abs_diff": 1.341104507446289e-07,
+        "mean_abs_diff": 1.2826840034563247e-08,
+        "cosine_similarity": 0.9999998748088551,
+        "atol": 0.002,
+        "passed": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "phase": "02_hw_roofline",
+  "device": "mps",
+  "notes": [
+    "fp16 elementwise bandwidth measured lower than fp32 despite moving half the bytes/element -- reproducible on this machine, likely a PyTorch MPS backend kernel-efficiency artifact (e.g. internal upcast or non-vectorized fp16 path) rather than a hardware bandwidth limit. Treat fp16 ridge point as backend-specific, not a hardware ceiling; fp32 is used as the primary roofline since TinyViT's standard baseline runs in fp32."
+  ],
+  "fp32": {
+    "compute": {
+      "dtype": "torch.float32",
+      "sweep": [
+        {
+          "n": 512,
+          "time_s": 0.00020253749971743673,
+          "gflops_per_s": 1325.3617546108674
+        },
+        {
+          "n": 1024,
+          "time_s": 0.0011645417005638592,
+          "gflops_per_s": 1844.0590379547682
+        },
+        {
+          "n": 2048,
+          "time_s": 0.006669652101118117,
+          "gflops_per_s": 2575.8268832522654
+        },
+        {
+          "n": 3072,
+          "time_s": 0.022588789550354704,
+          "gflops_per_s": 2566.8510641859307
+        },
+        {
+          "n": 4096,
+          "time_s": 0.05376921249990119,
+          "gflops_per_s": 2556.090131918011
+        }
+      ],
+      "peak_gflops_per_s": 2575.8268832522654,
+      "peak_at_n": 2048
+    },
+    "bandwidth": {
+      "dtype": "torch.float32",
+      "sweep": [
+        {
+          "size_mb": 16,
+          "time_s": 0.00042159443352526675,
+          "gb_per_s": 79.58936203077036
+        },
+        {
+          "size_mb": 64,
+          "time_s": 0.001588852766629619,
+          "gb_per_s": 84.47461641440299
+        },
+        {
+          "size_mb": 256,
+          "time_s": 0.006212719433824532,
+          "gb_per_s": 86.41480075167402
+        },
+        {
+          "size_mb": 1024,
+          "time_s": 0.02480089303377705,
+          "gb_per_s": 86.58896456169059
+        }
+      ],
+      "peak_gb_per_s": 86.58896456169059,
+      "peak_at_mb": 1024
+    },
+    "ridge_point_flops_per_byte": 29.74775014681125
+  },
+  "fp16": {
+    "compute": {
+      "dtype": "torch.float16",
+      "sweep": [
+        {
+          "n": 512,
+          "time_s": 0.00012561250041471795,
+          "gflops_per_s": 2137.0122807343428
+        },
+        {
+          "n": 1024,
+          "time_s": 0.0008058374995016492,
+          "gflops_per_s": 2664.9090534109664
+        },
+        {
+          "n": 2048,
+          "time_s": 0.006107331250677817,
+          "gflops_per_s": 2812.991219707185
+        },
+        {
+          "n": 3072,
+          "time_s": 0.020717510450049305,
+          "gflops_per_s": 2798.6981657760916
+        },
+        {
+          "n": 4096,
+          "time_s": 0.048464118750416674,
+          "gflops_per_s": 2835.8909027066206
+        }
+      ],
+      "peak_gflops_per_s": 2835.8909027066206,
+      "peak_at_n": 4096
+    },
+    "bandwidth": {
+      "dtype": "torch.float16",
+      "sweep": [
+        {
+          "size_mb": 16,
+          "time_s": 0.0011044472329861795,
+          "gb_per_s": 30.381199751188007
+        },
+        {
+          "size_mb": 64,
+          "time_s": 0.004190163900299619,
+          "gb_per_s": 32.03161766307106
+        },
+        {
+          "size_mb": 256,
+          "time_s": 0.016729572232967862,
+          "gb_per_s": 32.09113206983404
+        },
+        {
+          "size_mb": 1024,
+          "time_s": 0.0666139055674042,
+          "gb_per_s": 32.2377682213369
+        }
+      ],
+      "peak_gb_per_s": 32.2377682213369,
+      "peak_at_mb": 1024
+    },
+    "ridge_point_flops_per_byte": 87.9679661208575
+  }
+}

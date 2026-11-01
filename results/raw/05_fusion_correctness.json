@@ -1,0 +1,157 @@
+{
+  "phase": "05_fusion_correctness",
+  "results": [
+    {
+      "max_abs_diff": 1.1920928955078125e-07,
+      "mean_abs_diff": 2.031869428265054e-08,
+      "cosine_similarity": 0.9999999886732164,
+      "atol": 0.002,
+      "passed": true,
+      "window_size": 4,
+      "dim": 64,
+      "num_heads": 2
+    },
+    {
+      "max_abs_diff": 1.1920928955078125e-07,
+      "mean_abs_diff": 1.8945721436125496e-08,
+      "cosine_similarity": 0.9999999197417121,
+      "atol": 0.002,
+      "passed": true,
+      "window_size": 4,
+      "dim": 96,
+      "num_heads": 3
+    },
+    {
+      "max_abs_diff": 2.086162567138672e-07,
+      "mean_abs_diff": 2.492007844523414e-08,
+      "cosine_similarity": 0.999999962307256,
+      "atol": 0.002,
+      "passed": true,
+      "window_size": 4,
+      "dim": 192,
+      "num_heads": 6
+    },
+    {
+      "max_abs_diff": 2.682209014892578e-07,
+      "mean_abs_diff": 3.3897638473945335e-08,
+      "cosine_similarity": 1.0000000262121882,
+      "atol": 0.002,
+      "passed": true,
+      "window_size": 4,
+      "dim": 384,
+      "num_heads": 12
+    },
+    {
+      "max_abs_diff": 4.470348358154297e-07,
+      "mean_abs_diff": 3.4219528544099376e-08,
+      "cosine_similarity": 0.9999999225359758,
+      "atol": 0.002,
+      "passed": true,
+      "window_size": 4,
+      "dim": 576,
+      "num_heads": 18
+    },
+    {
+      "max_abs_diff": 1.043081283569336e-07,
+      "mean_abs_diff": 1.4024779559917988e-08,
+      "cosine_similarity": 0.9999999449286442,
+      "atol": 0.002,
+      "passed": true,
+      "window_size": 7,
+      "dim": 64,
+      "num_heads": 2
+    },
+    {
+      "max_abs_diff": 1.043081283569336e-07,
+      "mean_abs_diff": 1.4126519509716218e-08,
+      "cosine_similarity": 0.9999999732623006,
+      "atol": 0.002,
+      "passed": true,
+      "window_size": 7,
+      "dim": 96,
+      "num_heads": 3
+    },
+    {
+      "max_abs_diff": 1.4901161193847656e-07,
+      "mean_abs_diff": 1.630763257765011e-08,
+      "cosine_similarity": 1.0000000218225606,
+      "atol": 0.002,
+      "passed": true,
+      "window_size": 7,
+      "dim": 192,
+      "num_heads": 6
+    },
+    {
+      "max_abs_diff": 2.384185791015625e-07,
+      "mean_abs_diff": 1.9562643061021845e-08,
+      "cosine_similarity": 0.9999999287347326,
+      "atol": 0.002,
+      "passed": true,
+      "window_size": 7,
+      "dim": 384,
+      "num_heads": 12
+    },
+    {
+      "max_abs_diff": 1.9371509552001953e-07,
+      "mean_abs_diff": 2.10282884438584e-08,
+      "cosine_similarity": 1.0000000361395731,
+      "atol": 0.002,
+      "passed": true,
+      "window_size": 7,
+      "dim": 576,
+      "num_heads": 18
+    },
+    {
+      "max_abs_diff": 7.450580596923828e-08,
+      "mean_abs_diff": 1.160788976051208e-08,
+      "cosine_similarity": 1.0000000236641098,
+      "atol": 0.002,
+      "passed": true,
+      "window_size": 14,
+      "dim": 64,
+      "num_heads": 2
+    },
+    {
+      "max_abs_diff": 8.940696716308594e-08,
+      "mean_abs_diff": 1.0933140615065895e-08,
+      "cosine_similarity": 1.0000000465974697,
+      "atol": 0.002,
+      "passed": true,
+      "window_size": 14,
+      "dim": 96,
+      "num_heads": 3
+    },
+    {
+      "max_abs_diff": 8.940696716308594e-08,
+      "mean_abs_diff": 1.0671756811575506e-08,
+      "cosine_similarity": 0.9999999850262313,
+      "atol": 0.002,
+      "passed": true,
+      "window_size": 14,
+      "dim": 192,
+      "num_heads": 6
+    },
+    {
+      "max_abs_diff": 8.940696716308594e-08,
+      "mean_abs_diff": 1.1269228217258842e-08,
+      "cosine_similarity": 1.0000000841339967,
+      "atol": 0.002,
+      "passed": true,
+      "window_size": 14,
+      "dim": 384,
+      "num_heads": 12
+    },
+    {
+      "max_abs_diff": 1.1920928955078125e-07,
+      "mean_abs_diff": 1.3448820723738208e-08,
+      "cosine_similarity": 1.000000031847663,
+      "atol": 0.002,
+      "passed": true,
+      "window_size": 14,
+      "dim": 576,
+      "num_heads": 18
+    }
+  ],
+  "num_pass": 15,
+  "num_total": 15
+}

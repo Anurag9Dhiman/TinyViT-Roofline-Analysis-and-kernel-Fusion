@@ -1,0 +1,36 @@
+{
+  "phase": "09_conv_fusion_benchmark",
+  "variant": "tiny_vit_5m_224",
+  "num_conv_norms_fused": 27,
+  "correctness": {
+    "max_abs_diff": 2.175569534301758e-06,
+    "top1_match": true
+  },
+  "results": [
+    {
+      "batch_size": 1,
+      "baseline_ms": 4.708293339936063,
+      "conv_fused_ms": 3.696093339822255,
+      "speedup": 1.273856720339883
+    },
+    {
+      "batch_size": 4,
+      "baseline_ms": 14.715088339871727,
+      "conv_fused_ms": 12.906687500071712,
+      "speedup": 1.1401134752654365
+    },
+    {
+      "batch_size": 16,
+      "baseline_ms": 55.63217499991879,
+      "conv_fused_ms": 48.442211680230685,
+      "speedup": 1.1484235147467954
+    },
+    {
+      "batch_size": 32,
+      "baseline_ms": 110.85696665977594,
+      "conv_fused_ms": 96.43021581985522,
+      "speedup": 1.1496081981904078
+    }
+  ],
+  "mean_speedup": 1.1780004771356307
+}

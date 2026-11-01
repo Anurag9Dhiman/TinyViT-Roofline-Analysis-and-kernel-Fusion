@@ -1,0 +1,142 @@
+{
+  "phase": "22_native_kernel_fusion_benchmark",
+  "config": {
+    "window_size": 4,
+    "dim": 64,
+    "num_heads": 2,
+    "key_dim": 32,
+    "val_dim": 32
+  },
+  "methodology_note": "Native PyTorch MPS C++ extension (torch.utils.cpp_extension), not MLX -- see fusion/native/fused_window_attention.mm's header for why. Isolated microbenchmark, same warmup+iters+sync methodology as the rest of the project.",
+  "correctness": {
+    "max_abs_diff": 1.341104507446289e-07,
+    "top1_match": true
+  },
+  "results": [
+    {
+      "batch_windows": 16,
+      "is_representative_grid_point": true,
+      "baseline_us": 122.8691649157554,
+      "native_us": 74.31520993122831,
+      "speedup": 1.6533515148441238
+    },
+    {
+      "batch_windows": 20,
+      "is_representative_grid_point": false,
+      "baseline_us": 116.41916498774663,
+      "native_us": 90.52583511220291,
+      "speedup": 1.286032488332751
+    },
+    {
+      "batch_windows": 24,
+      "is_representative_grid_point": false,
+      "baseline_us": 115.89646019274369,
+      "native_us": 98.64083520369604,
+      "speedup": 1.174933889736581
+    },
+    {
+      "batch_windows": 28,
+      "is_representative_grid_point": false,
+      "baseline_us": 117.28520999895409,
+      "native_us": 99.93208514060825,
+      "speedup": 1.1736491821813717
+    },
+    {
+      "batch_windows": 32,
+      "is_representative_grid_point": false,
+      "baseline_us": 121.70687492471188,
+      "native_us": 100.61687498819083,
+      "speedup": 1.2096069862932668
+    },
+    {
+      "batch_windows": 40,
+      "is_representative_grid_point": false,
+      "baseline_us": 116.81312491418794,
+      "native_us": 107.69332991912961,
+      "speedup": 1.0846830068483042
+    },
+    {
+      "batch_windows": 48,
+      "is_representative_grid_point": false,
+      "baseline_us": 120.71478995494545,
+      "native_us": 129.48416493600234,
+      "speedup": 0.9322745373120244
+    },
+    {
+      "batch_windows": 64,
+      "is_representative_grid_point": true,
+      "baseline_us": 113.49916487233713,
+      "native_us": 151.42624994041398,
+      "speedup": 0.7495342776896271
+    },
+    {
+      "batch_windows": 256,
+      "is_representative_grid_point": true,
+      "baseline_us": 226.38395515969023,
+      "native_us": 575.0939599238336,
+      "speedup": 0.39364690109016776
+    },
+    {
+      "batch_windows": 512,
+      "is_representative_grid_point": true,
+      "baseline_us": 482.1468750014901,
+      "native_us": 1141.9647900038399,
+      "speedup": 0.42220817946573375
+    }
+  ],
+  "crossover_batch_windows": 48,
+  "mean_speedup_at_representative_grid_points": 0.8046852182724131,
+  "real_config_check": {
+    "config": {
+      "window_size": 7,
+      "dim": 128,
+      "num_heads": 4,
+      "key_dim": 32,
+      "val_dim": 32,
+      "threadgroup_memory_bytes_needed_all_threadgroup_design": 135044,
+      "m4_threadgroup_memory_limit_bytes": 32768
+    },
+    "correctness": {
+      "max_abs_diff": 2.288818359375e-05
+    },
+    "results": [
+      {
+        "batch_windows": 16,
+        "baseline_us": 262.9016697756015,
+        "native_us": 504.30437491741026,
+        "speedup": 0.5213154651269023
+      },
+      {
+        "batch_windows": 32,
+        "baseline_us": 296.90374998608604,
+        "native_us": 998.2170799048619,
+        "speedup": 0.2974340511328291
+      },
+      {
+        "batch_windows": 64,
+        "baseline_us": 575.0187500962056,
+        "native_us": 1999.40125021385,
+        "speedup": 0.2875954739123541
+      },
+      {
+        "batch_windows": 128,
+        "baseline_us": 1116.5608299779706,
+        "native_us": 3955.316040082835,
+        "speedup": 0.2822937076741374
+      },
+      {
+        "batch_windows": 256,
+        "baseline_us": 2379.1754149715416,
+        "native_us": 8036.447085032705,
+        "speedup": 0.29604816528968153
+      },
+      {
+        "batch_windows": 512,
+        "baseline_us": 4766.856664791703,
+        "native_us": 15818.29000002472,
+        "speedup": 0.30135094658046185
+      }
+    ],
+    "wins_at_any_size": false
+  }
+}
